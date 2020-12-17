@@ -27,7 +27,11 @@ public class MyTest {
                 for (int i = 0; i < cardArray.length(); i++) {
                     JSONObject cards = cardArray.getJSONObject(i);
                     String card = cards.getString("card");
-                    System.out.println(card+"\n\n\n\n");
+                    //System.out.println(card+"\n\n\n\n");
+
+                    if(!card.contains("互动抽奖")){
+                        continue;
+                    }
 
                     JSONObject desc = cards.getJSONObject("desc");
 
@@ -38,16 +42,17 @@ public class MyTest {
                         long x=time-timestamp;
                         long x1=((60*60)*24)*30;
                         if(x>x1){
-                            System.out.println("时间超过一个月");
+                            //System.out.println("时间超过一个月");
                             bool=false;
-                        }
+                        }else{
+                            //动态ID
+                            String dynamic_id = desc.getString("dynamic_id_str");
+                            System.out.println("动态ID："+dynamic_id);
 
-                        //动态ID
-                        String dynamic_id = desc.getString("dynamic_id_str");
-
-                        if(i==cardArray.length()-1){
-                            System.out.println(dynamic_id);
-                            offset_dynamic_id=dynamic_id;
+                            if(i==cardArray.length()-1){
+                                System.out.println(dynamic_id);
+                                offset_dynamic_id=dynamic_id;
+                            }
                         }
                     }
                 }
