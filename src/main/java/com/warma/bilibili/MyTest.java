@@ -9,7 +9,7 @@ import java.util.HashMap;
 public class MyTest {
     public static void main(String[] args) {
 
-        String host_uid="281120836";
+        String host_uid="401742377";
         String offset_dynamic_id="0";
 
         boolean bool=true;
@@ -26,7 +26,8 @@ public class MyTest {
                 JSONArray cardArray = json.getJSONObject("data").getJSONArray("cards");
                 for (int i = 0; i < cardArray.length(); i++) {
                     JSONObject cards = cardArray.getJSONObject(i);
-                    String card = cards.getString("card").replace("\\","");
+                    String card = cards.getString("card");
+                    card=Warma.unicodeDecode(card).replace("\\","");
                     //System.out.println(card+"\n\n\n\n");
 
                     if(!card.contains("互动抽奖")){
@@ -47,29 +48,29 @@ public class MyTest {
                         }else{
                             //动态ID
                             String dynamic_id= desc.getString("dynamic_id_str");
-
+                            offset_dynamic_id=dynamic_id;
 
                             if(card.contains("orig_dy_id")){
                                 //别人转发的抽奖动态
 
                                 //源动态ID
                                 String[] orig_dy_id = Warma.regex("orig_dy_id\":([^\"]+),", card).split("\n");
-                                System.out.println("动态ID："+orig_dy_id[0]);
+
+                                if(orig_dy_id[0].trim().equals("0")){
+                                    System.out.println("xxx源动态ID："+dynamic_id);
+                                }else{
+                                    System.out.println("源动态ID："+orig_dy_id[0].trim());
+                                }
 
                                 //源UID
                                 String[] uids = Warma.regex("\"uid\":([^\"]+),", card).split("\n");
-                                System.out.println("UID:"+uids[uids.length-1]);
+                                System.out.println("源UID:"+uids[uids.length-1].trim());
 
                             }else{
                                 //抽奖动态
-                                String uid= desc.getString("uid");
+                                long uid= desc.getLong("uid");
                                 System.out.println("UID:"+uid);
                                 System.out.println("动态ID："+dynamic_id);
-                            }
-
-                            if(i==cardArray.length()-1){
-                                System.out.println(dynamic_id);
-                                offset_dynamic_id=dynamic_id;
                             }
                         }
                     }
