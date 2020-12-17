@@ -26,7 +26,7 @@ public class MyTest {
                 JSONArray cardArray = json.getJSONObject("data").getJSONArray("cards");
                 for (int i = 0; i < cardArray.length(); i++) {
                     JSONObject cards = cardArray.getJSONObject(i);
-                    String card = cards.getString("card");
+                    String card = cards.getString("card").replace("\\","");
                     //System.out.println(card+"\n\n\n\n");
 
                     if(!card.contains("互动抽奖")){
@@ -46,8 +46,26 @@ public class MyTest {
                             bool=false;
                         }else{
                             //动态ID
-                            String dynamic_id = desc.getString("dynamic_id_str");
-                            System.out.println("动态ID："+dynamic_id);
+                            String dynamic_id= desc.getString("dynamic_id_str");
+
+
+                            if(card.contains("orig_dy_id")){
+                                //别人转发的抽奖动态
+
+                                //源动态ID
+                                String[] orig_dy_id = Warma.regex("orig_dy_id\":([^\"]+),", card).split("\n");
+                                System.out.println("动态ID："+orig_dy_id[0]);
+
+                                //源UID
+                                String[] uids = Warma.regex("\"uid\":([^\"]+),", card).split("\n");
+                                System.out.println("UID:"+uids[uids.length-1]);
+
+                            }else{
+                                //抽奖动态
+                                String uid= desc.getString("uid");
+                                System.out.println("UID:"+uid);
+                                System.out.println("动态ID："+dynamic_id);
+                            }
 
                             if(i==cardArray.length()-1){
                                 System.out.println(dynamic_id);

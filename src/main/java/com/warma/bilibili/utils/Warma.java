@@ -60,7 +60,7 @@ public class Warma {
         StringBuilder string= new StringBuilder();
         Matcher mat= Pattern.compile(regex).matcher(str);
         while(mat.find()) {
-            string.append(mat.group(0)).append("\n");
+            string.append(mat.group(1)).append("\n");
         }
         return string.toString();
     }
