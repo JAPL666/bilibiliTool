@@ -29,10 +29,18 @@ public class MyTest {
                     System.out.println(card+"\n\n\n\n");
 
                     JSONObject desc = cards.getJSONObject("desc");
+
                     if(desc.toString().contains("dynamic_id_str")){
+                        //动态ID
+                        String dynamic_id = desc.getString("dynamic_id_str");
+
+                        //动态的时间戳
+                        long timestamp = desc.getLong("timestamp");
+                        long time = System.currentTimeMillis();
+                        long x=time-timestamp;
+                        System.out.println("时间："+x);
 
                         if(i==cardArray.length()-1){
-                            String dynamic_id = desc.getString("dynamic_id_str");
                             System.out.println(dynamic_id);
                             offset_dynamic_id=dynamic_id;
                         }
