@@ -35,6 +35,9 @@ public class Login {
                 System.out.println("扫码登录成功！");
                 System.out.println(res);
                 System.out.println(cookies);
+                HashMap<String,String> cookieMap= (HashMap<String,String>)loginInfoResult.get(Warma.COOKIEMAP);
+
+                System.out.println(cookieMap);
                 break;
             }else{
                 System.out.println("请扫描二维码！");

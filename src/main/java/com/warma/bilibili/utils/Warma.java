@@ -15,7 +15,7 @@ import java.util.zip.GZIPInputStream;
 public class Warma {
     public static final String RESULT="result";
     public static final String COOKIES="Cookies";
-    public static final String COOKIESLIST="CookiesList";
+    public static final String COOKIEMAP="CookieMap";
 
     //读取文件
     public static String read(String path){
@@ -88,16 +88,20 @@ public class Warma {
 
             if(code==200){
 
-                ArrayList<String> cookiesList=new ArrayList<>();
+
+                HashMap<String,String> cookiesMap=new HashMap<>();
+
                 StringBuilder str= new StringBuilder();
                 Map<String, List<String>> he = connection.getHeaderFields();
                 if(he!=null&&he.get("Set-Cookie")!=null) {
                     for (String s : connection.getHeaderFields().get("Set-Cookie")) {
                         str.append(s.split(";")[0]).append("; ");
-                        cookiesList.add(s.split(";")[0]);
+
+                        String[] arays = s.split(";")[0].split("=");
+                        cookiesMap.put(arays[0],arays[1]);
                     }
                     result.put("Cookies", str.toString());
-                    result.put("CookiesList", cookiesList);
+                    result.put("CookieMap", cookiesMap);
                 }
 
                 InputStream is = connection.getInputStream();
@@ -146,16 +150,18 @@ public class Warma {
 
             if(code==200){
 
-                ArrayList<String> cookiesList=new ArrayList<>();
+                HashMap<String,String> cookiesMap=new HashMap<>();
                 StringBuilder str= new StringBuilder();
                 Map<String, List<String>> he = connection.getHeaderFields();
                 if(he!=null&&he.get("Set-Cookie")!=null) {
                     for (String s : connection.getHeaderFields().get("Set-Cookie")) {
                         str.append(s.split(";")[0]).append("; ");
-                        cookiesList.add(s.split(";")[0]);
+
+                        String[] arays = s.split(";")[0].split("=");
+                        cookiesMap.put(arays[0],arays[1]);
                     }
                     result.put("Cookies", str.toString());
-                    result.put("CookiesList", cookiesList);
+                    result.put("CookieMap", cookiesMap);
                 }
 
                 InputStream is = connection.getInputStream();
