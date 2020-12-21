@@ -1,5 +1,6 @@
 package com.warma.bilibili;
 
+import com.warma.bilibili.entity.ResultEntity;
 import com.warma.bilibili.utils.QRCode;
 import com.warma.bilibili.utils.Warma;
 import org.json.JSONObject;
@@ -10,12 +11,12 @@ public class Login {
     public static void main(String[] args) {
 
     }
-    public static HashMap<String,String> login(){
+    public static ResultEntity login(){
         String loginUrl="https://passport.bilibili.com/qrcode/getLoginUrl";
-        HashMap<String, Object> loginResult = Warma.get(loginUrl, new HashMap<>());
+        ResultEntity loginResult = Warma.get(loginUrl, new HashMap<>());
 
         assert loginResult != null;
-        JSONObject json = new JSONObject(loginResult.get(Warma.RESULT).toString());
+        JSONObject json = new JSONObject(loginResult.getResult());
         JSONObject data = json.getJSONObject("data");
         String url = data.getString("url");
         String oauthKey = data.getString("oauthKey");
@@ -26,12 +27,13 @@ public class Login {
 
         while(true){
             String loginInfoUrl="https://passport.bilibili.com/qrcode/getLoginInfo";
-            HashMap<String, Object> loginInfoResult = Warma.post(loginInfoUrl, "oauthKey="+oauthKey,new HashMap<>());
+            ResultEntity loginInfoResult = Warma.post(loginInfoUrl, "oauthKey=" + oauthKey, new HashMap<>());
 
-            String res = loginInfoResult.get(Warma.RESULT).toString();
-            String cookies = loginInfoResult.get(Warma.COOKIES).toString();
+            assert loginInfoResult != null;
+            String res = loginInfoResult.result;
+            String cookies = loginInfoResult.cookies;
 
-            JSONObject jsonObject=new JSONObject(res);
+            JSONObject jsonObject=new JSONObject(loginInfoResult.result);
             boolean status = jsonObject.getBoolean("status");
 
             if(status){
@@ -39,7 +41,7 @@ public class Login {
                 System.out.println(res);
                 System.out.println(cookies);
 
-                return (HashMap<String,String>)loginInfoResult.get(Warma.COOKIEMAP);
+                return loginInfoResult;
             }else{
                 System.out.println("请扫描二维码！");
             }

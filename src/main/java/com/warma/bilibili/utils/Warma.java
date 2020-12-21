@@ -1,5 +1,7 @@
 package com.warma.bilibili.utils;
 
+import com.warma.bilibili.entity.ResultEntity;
+
 import java.io.*;
 import java.math.BigInteger;
 import java.net.HttpURLConnection;
@@ -13,9 +15,6 @@ import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 
 public class Warma {
-    public static final String RESULT="result";
-    public static final String COOKIES="Cookies";
-    public static final String COOKIEMAP="CookieMap";
 
     //读取文件
     public static String read(String path){
@@ -65,8 +64,8 @@ public class Warma {
         }
         return string.toString();
     }
-    public static HashMap<String,Object> post(String url, String string, HashMap<String,String> requestProperty) {
-        HashMap<String,Object> result=new HashMap<>();
+    public static ResultEntity post(String url, String string, HashMap<String,String> requestProperty) {
+        ResultEntity resultEntity=new ResultEntity();
         try {
             URL url2=new URL(url);
             HttpURLConnection connection=(HttpURLConnection)url2.openConnection();
@@ -100,8 +99,8 @@ public class Warma {
                         String[] arays = s.split(";")[0].split("=");
                         cookiesMap.put(arays[0],arays[1]);
                     }
-                    result.put("Cookies", str.toString());
-                    result.put("CookieMap", cookiesMap);
+                    resultEntity.setCookieMap(cookiesMap);
+                    resultEntity.setCookies(str.toString());
                 }
 
                 InputStream is = connection.getInputStream();
@@ -118,8 +117,8 @@ public class Warma {
                 while((lenght=is.read(buffer))!=-1) {
                     message.write(buffer,0,lenght);
                 }
-                result.put("result",new String(message.toByteArray(), StandardCharsets.UTF_8));
-                return result;
+                resultEntity.setResult(new String(message.toByteArray(), StandardCharsets.UTF_8));
+                return resultEntity;
             }else{
                 System.out.println(code);
             }
@@ -129,8 +128,8 @@ public class Warma {
         return null;
     }
 
-    public static HashMap<String,Object> get(String url,HashMap<String,String> requestProperty) {
-        HashMap<String,Object> result=new HashMap<>();
+    public static ResultEntity get(String url,HashMap<String,String> requestProperty) {
+        ResultEntity resultEntity=new ResultEntity();
         try {
             URL url2=new URL(url);
             HttpURLConnection connection=(HttpURLConnection)url2.openConnection();
@@ -160,8 +159,8 @@ public class Warma {
                         String[] arays = s.split(";")[0].split("=");
                         cookiesMap.put(arays[0],arays[1]);
                     }
-                    result.put("Cookies", str.toString());
-                    result.put("CookieMap", cookiesMap);
+                    resultEntity.setCookies(str.toString());
+                    resultEntity.setCookieMap(cookiesMap);
                 }
 
                 InputStream is = connection.getInputStream();
@@ -178,8 +177,8 @@ public class Warma {
                 while((lenght=is.read(buffer))!=-1) {
                     message.write(buffer,0,lenght);
                 }
-                result.put("result",new String(message.toByteArray(), StandardCharsets.UTF_8));
-                return result;
+                resultEntity.setResult(new String(message.toByteArray(), StandardCharsets.UTF_8));
+                return resultEntity;
             }else{
                 System.out.println(code);
             }
