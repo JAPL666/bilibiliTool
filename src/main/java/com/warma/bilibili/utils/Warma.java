@@ -15,6 +15,7 @@ import java.util.zip.GZIPInputStream;
 public class Warma {
     public static final String RESULT="result";
     public static final String COOKIES="Cookies";
+    public static final String COOKIESLIST="CookiesList";
 
     //读取文件
     public static String read(String path){
@@ -64,8 +65,8 @@ public class Warma {
         }
         return string.toString();
     }
-    public static HashMap<String,String> post(String url, String string, HashMap<String,String> requestProperty) {
-        HashMap<String,String> result=new HashMap<>();
+    public static HashMap<String,Object> post(String url, String string, HashMap<String,String> requestProperty) {
+        HashMap<String,Object> result=new HashMap<>();
         try {
             URL url2=new URL(url);
             HttpURLConnection connection=(HttpURLConnection)url2.openConnection();
@@ -87,13 +88,16 @@ public class Warma {
 
             if(code==200){
 
+                ArrayList<String> cookiesList=new ArrayList<>();
                 StringBuilder str= new StringBuilder();
                 Map<String, List<String>> he = connection.getHeaderFields();
                 if(he!=null&&he.get("Set-Cookie")!=null) {
                     for (String s : connection.getHeaderFields().get("Set-Cookie")) {
                         str.append(s.split(";")[0]).append("; ");
+                        cookiesList.add(s.split(";")[0]);
                     }
                     result.put("Cookies", str.toString());
+                    result.put("CookiesList", cookiesList);
                 }
 
                 InputStream is = connection.getInputStream();
@@ -121,8 +125,8 @@ public class Warma {
         return null;
     }
 
-    public static HashMap<String,String> get(String url,HashMap<String,String> requestProperty) {
-        HashMap<String,String> result=new HashMap<>();
+    public static HashMap<String,Object> get(String url,HashMap<String,String> requestProperty) {
+        HashMap<String,Object> result=new HashMap<>();
         try {
             URL url2=new URL(url);
             HttpURLConnection connection=(HttpURLConnection)url2.openConnection();
@@ -142,13 +146,16 @@ public class Warma {
 
             if(code==200){
 
+                ArrayList<String> cookiesList=new ArrayList<>();
                 StringBuilder str= new StringBuilder();
                 Map<String, List<String>> he = connection.getHeaderFields();
                 if(he!=null&&he.get("Set-Cookie")!=null) {
                     for (String s : connection.getHeaderFields().get("Set-Cookie")) {
                         str.append(s.split(";")[0]).append("; ");
+                        cookiesList.add(s.split(";")[0]);
                     }
                     result.put("Cookies", str.toString());
+                    result.put("CookiesList", cookiesList);
                 }
 
                 InputStream is = connection.getInputStream();

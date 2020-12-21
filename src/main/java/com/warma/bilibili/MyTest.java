@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class MyTest {
     public static void main(String[] args) {
-        HashMap<String, String> list = getDynamicIdList("281120836");
+        HashMap<String, String> list = getDynamicIdList("401742377");
         for(String dyid:list.keySet()){
             System.out.println("UID："+list.get(dyid)+"  动态ID："+dyid);
         }
@@ -22,10 +22,10 @@ public class MyTest {
         boolean bool=true;
         while (bool){
             String url="https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/space_history?visitor_uid=29204204&host_uid="+host_uid+"&offset_dynamic_id="+offset_dynamic_id+"&platform=web";
-            HashMap<String, String> result = Warma.get(url, new HashMap<>());
+            HashMap<String, Object> result = Warma.get(url, new HashMap<>());
 
             assert result != null;
-            String res = result.get(Warma.RESULT);
+            String res = result.get(Warma.RESULT).toString();
             JSONObject json = new JSONObject(res);
 
             int has_more = json.getJSONObject("data").getInt("has_more");
@@ -92,10 +92,10 @@ public class MyTest {
     //检查抽奖是否过期
     public static boolean isLottery(String dynamicId){
         String url="https://api.vc.bilibili.com/lottery_svr/v1/lottery_svr/lottery_notice?dynamic_id="+dynamicId;
-        HashMap<String, String> res = Warma.get(url, new HashMap<>());
+        HashMap<String, Object> res = Warma.get(url, new HashMap<>());
 
         assert res != null;
-        String result = res.get(Warma.RESULT);
+        String result = res.get(Warma.RESULT).toString();
         if(result.contains("-9999")){
             return false;
         }else{

@@ -9,10 +9,10 @@ import java.util.HashMap;
 public class Login {
     public static void main(String[] args) {
         String loginUrl="https://passport.bilibili.com/qrcode/getLoginUrl";
-        HashMap<String, String> loginResult = Warma.get(loginUrl, new HashMap<>());
+        HashMap<String, Object> loginResult = Warma.get(loginUrl, new HashMap<>());
 
         assert loginResult != null;
-        JSONObject json = new JSONObject(loginResult.get(Warma.RESULT));
+        JSONObject json = new JSONObject(loginResult.get(Warma.RESULT).toString());
         JSONObject data = json.getJSONObject("data");
         String url = data.getString("url");
         String oauthKey = data.getString("oauthKey");
@@ -23,10 +23,10 @@ public class Login {
 
         while(true){
             String loginInfoUrl="https://passport.bilibili.com/qrcode/getLoginInfo";
-            HashMap<String, String> loginInfoResult = Warma.post(loginInfoUrl, "oauthKey="+oauthKey,new HashMap<>());
+            HashMap<String, Object> loginInfoResult = Warma.post(loginInfoUrl, "oauthKey="+oauthKey,new HashMap<>());
 
-            String res = loginInfoResult.get(Warma.RESULT);
-            String cookies = loginInfoResult.get(Warma.COOKIES);
+            String res = loginInfoResult.get(Warma.RESULT).toString();
+            String cookies = loginInfoResult.get(Warma.COOKIES).toString();
 
             JSONObject jsonObject=new JSONObject(res);
             boolean status = jsonObject.getBoolean("status");
