@@ -28,7 +28,6 @@ public class MyTest {
                     JSONObject cards = cardArray.getJSONObject(i);
                     String card = cards.getString("card");
                     card=Warma.unicodeDecode(card).replace("\\","");
-                    //System.out.println(card+"\n\n\n\n");
 
                     if(!card.contains("互动抽奖")){
                         continue;
