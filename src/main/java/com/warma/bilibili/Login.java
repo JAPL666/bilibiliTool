@@ -8,6 +8,9 @@ import java.util.HashMap;
 
 public class Login {
     public static void main(String[] args) {
+
+    }
+    public static HashMap<String,String> login(){
         String loginUrl="https://passport.bilibili.com/qrcode/getLoginUrl";
         HashMap<String, Object> loginResult = Warma.get(loginUrl, new HashMap<>());
 
@@ -35,10 +38,8 @@ public class Login {
                 System.out.println("扫码登录成功！");
                 System.out.println(res);
                 System.out.println(cookies);
-                HashMap<String,String> cookieMap= (HashMap<String,String>)loginInfoResult.get(Warma.COOKIEMAP);
 
-                System.out.println(cookieMap);
-                break;
+                return (HashMap<String,String>)loginInfoResult.get(Warma.COOKIEMAP);
             }else{
                 System.out.println("请扫描二维码！");
             }
