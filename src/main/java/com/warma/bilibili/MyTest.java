@@ -8,8 +8,15 @@ import java.util.HashMap;
 
 public class MyTest {
     public static void main(String[] args) {
+        HashMap<String, String> list = getDynamicIdList("281120836");
+        for(String dyid:list.keySet()){
+            System.out.println("UID："+list.get(dyid)+"  动态ID："+dyid);
+        }
+    }
+    //获取有效的抽奖动态id
+    public static HashMap<String,String> getDynamicIdList(String host_uid){
+        HashMap<String,String> map=new HashMap<>();
 
-        String host_uid="401742377";
         String offset_dynamic_id="0";
 
         boolean bool=true;
@@ -46,35 +53,53 @@ public class MyTest {
                             bool=false;
                         }else{
                             //动态ID
-                            String dynamic_id= desc.getString("dynamic_id_str");
+                            String dynamic_id= desc.getString("dynamic_id_str").trim();
                             offset_dynamic_id=dynamic_id;
 
                             if(card.contains("orig_dy_id")){
                                 //别人转发的抽奖动态
 
-                                //源动态ID
-                                String[] orig_dy_id = Warma.regex("orig_dy_id\":([^\"]+),", card).split("\n");
-
-                                if(orig_dy_id[0].trim().equals("0")){
-                                    System.out.println("xxx源动态ID："+dynamic_id);
-                                }else{
-                                    System.out.println("源动态ID："+orig_dy_id[0].trim());
-                                }
-
                                 //源UID
                                 String[] uids = Warma.regex("\"uid\":([^\"]+),", card).split("\n");
-                                System.out.println("源UID:"+uids[uids.length-1].trim());
+                                String uid=uids[uids.length-1].trim();
+
+                                //源动态ID
+                                String[] orig_dy_id = Warma.regex("orig_dy_id\":([^\"]+),", card).split("\n");
+                                if(!orig_dy_id[0].trim().equals("0")){
+                                    dynamic_id=orig_dy_id[0].trim();
+                                }
+
+                                //如果抽奖没过期
+                                if(isLottery(dynamic_id)){
+                                    map.put(dynamic_id,uid);
+                                }
 
                             }else{
                                 //抽奖动态
-                                long uid= desc.getLong("uid");
-                                System.out.println("UID:"+uid);
-                                System.out.println("动态ID："+dynamic_id);
+
+                                //如果抽奖没过期
+                                if(isLottery(dynamic_id)){
+                                    map.put(dynamic_id,host_uid);
+                                }
                             }
                         }
                     }
                 }
             }
+        }
+        return map;
+    }
+    //检查抽奖是否过期
+    public static boolean isLottery(String dynamicId){
+        String url="https://api.vc.bilibili.com/lottery_svr/v1/lottery_svr/lottery_notice?dynamic_id="+dynamicId;
+        HashMap<String, String> res = Warma.get(url, new HashMap<>());
+
+        assert res != null;
+        String result = res.get(Warma.RESULT);
+        if(result.contains("-9999")){
+            return false;
+        }else{
+            return !result.contains("lottery_result");
         }
     }
 }
