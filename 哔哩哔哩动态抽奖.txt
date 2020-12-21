@@ -1,0 +1,42 @@
+获取用户信息
+https://api.bilibili.com/x/space/acc/info?mid=15547141&jsonp=jsonp
+
+data 中的   is_followed 是否关注字段
+
+
+动态信息
+https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/get_dynamic_detail?dynamic_id=467366564351811773
+
+
+动态抽奖信息
+https://api.vc.bilibili.com/lottery_svr/v1/lottery_svr/lottery_notice?dynamic_id=467366564351811773
+
+lottery_time  开奖时间
+
+
+first_prize_cmt  一等奖
+second_prize_cmt   二等奖
+third_prize_cmt  三等奖
+
+first_prize  一等奖数量
+second_prize 二等奖数量
+third_prize 三等奖数量
+
+lottery_result   开奖结果
+
+sender_uid  发动态的人的UID
+
+
+
+
+获取自己的关注列表
+https://api.vc.bilibili.com/feed/v1/feed/get_attention_list?uid=29204204
+
+
+https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/space_history?visitor_uid=29204204&host_uid=401742377&offset_dynamic_id=0&need_top=1&platform=web
+
+
+offset_dynamic_id  =====  dynamic_id_str
+
+
+https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/space_history?visitor_uid=29204204&host_uid=281120836&offset_dynamic_id=424456856068483149&need_top=1&platform=web

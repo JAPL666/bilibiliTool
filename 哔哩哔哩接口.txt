@@ -1,0 +1,77 @@
+取关
+POST /x/relation/modify HTTP/2
+Host: api.bilibili.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0
+Accept: application/json, text/plain, */*
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Accept-Encoding: gzip, deflate, br
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 76
+Origin: https://space.bilibili.com
+Connection: keep-alive
+Referer: https://space.bilibili.com/745493/
+Cookie: LIVE_BUVID=AUTO4815955132889411; PVID=1; _uuid=8AA83BE1-7A6E-0034-F53D-5BC2E3A9A65F99302infoc; buvid3=91389F91-DAB6-41A0-BE35-6BB4553081E770380infoc; sid=a1nmkmdj; CURRENT_FNVAL=80; blackside_state=1; DedeUserID=29204204; DedeUserID__ckMd5=d2cb0fda79d4dd57; SESSDATA=2fd5d837%2C1614959918%2Caee44*91; bili_jct=0b34266c7db4795fbada0bf9f7d707a5; rpdid=|(u)mY~kJmlY0J'ulmmR|~mJ|; CURRENT_QUALITY=80; bsource=search_baidu; bfe_id=018fcd81e698bbc7e0648e86bdc49e09; bp_video_offset_29204204=469764530496689825
+TE: Trailers
+
+
+fid=745493&act=2&re_src=11&jsonp=jsonp&csrf=0b34266c7db4795fbada0bf9f7d707a5
+
+
+
+
+
+关注
+POST /x/relation/modify HTTP/2
+Host: api.bilibili.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0
+Accept: application/json, text/plain, */*
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Accept-Encoding: gzip, deflate, br
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 76
+Origin: https://space.bilibili.com
+Connection: keep-alive
+Referer: https://space.bilibili.com/617459493/fans/follow
+Cookie: LIVE_BUVID=AUTO4815955132889411; PVID=1; _uuid=8AA83BE1-7A6E-0034-F53D-5BC2E3A9A65F99302infoc; buvid3=91389F91-DAB6-41A0-BE35-6BB4553081E770380infoc; sid=a1nmkmdj; CURRENT_FNVAL=80; blackside_state=1; DedeUserID=29204204; DedeUserID__ckMd5=d2cb0fda79d4dd57; SESSDATA=2fd5d837%2C1614959918%2Caee44*91; bili_jct=0b34266c7db4795fbada0bf9f7d707a5; rpdid=|(u)mY~kJmlY0J'ulmmR|~mJ|; CURRENT_QUALITY=80; bsource=search_baidu; bfe_id=018fcd81e698bbc7e0648e86bdc49e09; bp_video_offset_29204204=469764530496689825
+TE: Trailers
+
+
+fid=745493&act=1&re_src=11&jsonp=jsonp&csrf=0b34266c7db4795fbada0bf9f7d707a5
+
+
+
+转发动态
+POST /dynamic_repost/v1/dynamic_repost/repost HTTP/2
+Host: api.vc.bilibili.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0
+Accept: application/json, text/plain, */*
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Accept-Encoding: gzip, deflate, br
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 299
+Origin: https://space.bilibili.com
+Connection: keep-alive
+Referer: https://space.bilibili.com/401742377/dynamic
+Cookie: l=v; LIVE_BUVID=AUTO4815955132889411; PVID=1; _uuid=8AA83BE1-7A6E-0034-F53D-5BC2E3A9A65F99302infoc; buvid3=91389F91-DAB6-41A0-BE35-6BB4553081E770380infoc; sid=a1nmkmdj; CURRENT_FNVAL=80; blackside_state=1; DedeUserID=29204204; DedeUserID__ckMd5=d2cb0fda79d4dd57; SESSDATA=2fd5d837%2C1614959918%2Caee44*91; bili_jct=0b34266c7db4795fbada0bf9f7d707a5; rpdid=|(u)mY~kJmlY0J'ulmmR|~mJ|; CURRENT_QUALITY=80; bsource=search_baidu; bp_video_offset_29204204=469764530496689825; bp_t_offset_29204204=469764964286292297
+TE: Trailers
+
+uid=29204204&dynamic_id=469642858366479324&content=%E5%93%88%E5%93%88%E5%93%88%E5%93%88%E5%93%88%E5%93%88%E5%93%88%E5%93%88%E5%93%88%E5%93%88%E6%88%96%E6%88%96&extension=%7B%22emoji_type%22%3A1%7D&at_uids=&ctrl=%5B%5D&csrf_token=0b34266c7db4795fbada0bf9f7d707a5&csrf=0b34266c7db4795fbada0bf9f7d707a5
+
+
+删除动态
+POST /dynamic_svr/v1/dynamic_svr/rm_dynamic HTTP/2
+Host: api.vc.bilibili.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0
+Accept: application/json, text/plain, */*
+Accept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2
+Accept-Encoding: gzip, deflate, br
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 111
+Origin: https://t.bilibili.com
+Connection: keep-alive
+Referer: https://t.bilibili.com/?spm_id_from=333.999.b_696e7465726e6174696f6e616c486561646572.30
+Cookie: l=v; LIVE_BUVID=AUTO4815955132889411; PVID=1; _uuid=8AA83BE1-7A6E-0034-F53D-5BC2E3A9A65F99302infoc; buvid3=91389F91-DAB6-41A0-BE35-6BB4553081E770380infoc; sid=a1nmkmdj; CURRENT_FNVAL=80; blackside_state=1; DedeUserID=29204204; DedeUserID__ckMd5=d2cb0fda79d4dd57; SESSDATA=2fd5d837%2C1614959918%2Caee44*91; bili_jct=0b34266c7db4795fbada0bf9f7d707a5; rpdid=|(u)mY~kJmlY0J'ulmmR|~mJ|; CURRENT_QUALITY=80; bsource=search_baidu; bp_video_offset_29204204=469764530496689825; bp_t_offset_29204204=469767339406367331
+TE: Trailers
+
+
+dynamic_id=469767317926287853&csrf_token=0b34266c7db4795fbada0bf9f7d707a5&csrf=0b34266c7db4795fbada0bf9f7d707a5
