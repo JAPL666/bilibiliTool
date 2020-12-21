@@ -1,5 +1,6 @@
 package com.warma.bilibili;
 
+import com.warma.bilibili.entity.BiLiBiLiEntity;
 import com.warma.bilibili.entity.ResultEntity;
 import com.warma.bilibili.utils.QRCode;
 import com.warma.bilibili.utils.Warma;
@@ -9,11 +10,9 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 public class BiLiBiLiApi {
-    public static void main(String[] args) {
 
-    }
     //扫码登录
-    public static ResultEntity login(){
+    public ResultEntity login(){
         String loginUrl="https://passport.bilibili.com/qrcode/getLoginUrl";
         ResultEntity loginResult = Warma.get(loginUrl, new HashMap<>());
 
@@ -55,7 +54,7 @@ public class BiLiBiLiApi {
         }
     }
     //获取有效的抽奖动态id
-    public static HashMap<String,String> getDynamicIdList(String host_uid){
+    public HashMap<String,String> getDynamicIdList(String host_uid){
         HashMap<String,String> map=new HashMap<>();
 
         String offset_dynamic_id="0";
@@ -131,7 +130,7 @@ public class BiLiBiLiApi {
         return map;
     }
     //检查抽奖是否过期
-    public static boolean isLottery(String dynamicId){
+    public boolean isLottery(String dynamicId){
         String url="https://api.vc.bilibili.com/lottery_svr/v1/lottery_svr/lottery_notice?dynamic_id="+dynamicId;
         ResultEntity res = Warma.get(url, new HashMap<>());
 
@@ -142,5 +141,28 @@ public class BiLiBiLiApi {
         }else{
             return !result.contains("lottery_result");
         }
+    }
+    //检测是否关注
+    public boolean is_followed(ResultEntity resultEntity,String mid){
+        String url="https://api.bilibili.com/x/space/acc/info?mid="+mid+"&jsonp=jsonp";
+        HashMap<String,String> requestProperty=new HashMap<>();
+        requestProperty.put("Cookie",resultEntity.getCookies());
+        ResultEntity result = Warma.get(url, requestProperty);
+
+        assert result != null;
+        return new JSONObject(result.result).getJSONObject("data").getBoolean("is_followed");
+    }
+    //转发动态
+    public void dynamic_repost(ResultEntity resultEntity, BiLiBiLiEntity biLiBiLiEntity,String str){
+        String url="https://api.vc.bilibili.com/dynamic_repost/v1/dynamic_repost/repost";
+
+        String bili_jct = resultEntity.getCookieMap().get("bili_jct");
+        String data="uid="+biLiBiLiEntity.getMyuid()+"&dynamic_id="+biLiBiLiEntity.getDynamicId()+"&content="+str+"&extension={\"emoji_type\":1}&at_uids=&ctrl=[]&csrf_token="+bili_jct+"&csrf="+bili_jct;
+
+        HashMap<String,String> requestProperty=new HashMap<>();
+        requestProperty.put("Cookie",resultEntity.getCookies());
+        requestProperty.put("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0");
+
+        Warma.post(url,data,requestProperty);
     }
 }
