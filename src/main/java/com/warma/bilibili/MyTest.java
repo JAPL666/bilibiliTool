@@ -26,6 +26,7 @@ public class MyTest {
         //检测是否关注
 //        System.out.println(biLiBiLiApi.is_followed(login,"15547141")?"已经关注！":"没有关注！");
 
+        //-----------------------------------------------------------------------------------------------------------------//
         //获取已过期的抽奖动态id
         HashMap<String, String> expiredDynamicIdList = biLiBiLiApi.getExpiredDynamicIdList("281120836");
         for (String dynamicId:expiredDynamicIdList.keySet()){
@@ -41,5 +42,6 @@ public class MyTest {
                 biLiBiLiApi.rm_dynamic(resultEntity,dynamicId);
             }
         }
+        //-----------------------------------------------------------------------------------------------------------------//
     }
 }
