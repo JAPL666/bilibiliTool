@@ -228,6 +228,23 @@ public class BiLiBiLiApi {
     }
 
     /**
+     * 检测是否中奖
+     * @param dynamicId 动态id
+     * @param uid 自己的id
+     * @return 检测是否中奖
+     */
+    public boolean isWinning(String dynamicId,String uid){
+        String url="https://api.vc.bilibili.com/lottery_svr/v1/lottery_svr/lottery_notice?dynamic_id="+dynamicId;
+        ResultEntity res = Warma.get(url, new HashMap<>());
+
+        assert res != null;
+        String result = res.result;
+
+        //检查是否中奖
+        return result.contains("lottery_result")&&result.contains(uid);
+    }
+
+    /**
      * 查看是否关注
      * @param resultEntity 登录返回的数据
      * @param mid 检测是否关注的uid

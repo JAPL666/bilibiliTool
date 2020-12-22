@@ -7,7 +7,6 @@ public class BiLiBiLiEntity implements Serializable {
     String host_uid;
     String myuid;
 
-
     public String getHost_uid() {
         return host_uid;
     }
