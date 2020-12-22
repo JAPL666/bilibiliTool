@@ -1,6 +1,7 @@
 package com.warma.bilibili.utils;
 
 import com.warma.bilibili.entity.BiLiBiLiEntity;
+import com.warma.bilibili.entity.BiLiBiLiInfoEntity;
 import com.warma.bilibili.entity.ResultEntity;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -259,6 +260,27 @@ public class BiLiBiLiApi {
         return new JSONObject(result.result).getJSONObject("data").getBoolean("is_followed");
     }
 
+    //获取用户信息
+    public BiLiBiLiInfoEntity getInfo(Integer uid){
+        BiLiBiLiInfoEntity biLiBiLiInfoEntity = new BiLiBiLiInfoEntity();
+
+        String url="https://api.bilibili.com/x/space/acc/info?mid="+uid+"&jsonp=jsonp";
+        ResultEntity result = Warma.get(url, new HashMap<>());
+
+        assert result != null;
+        if(!result.result.contains("-404")||!result.result.contains("-400")){
+            JSONObject data = new JSONObject(result.result).getJSONObject("data");
+
+            biLiBiLiInfoEntity.setName(data.getString("name"));//名字
+            biLiBiLiInfoEntity.setFace(data.getString("face"));//头像
+            biLiBiLiInfoEntity.setLevel(data.getInt("level"));//等级
+            biLiBiLiInfoEntity.setSex(data.getString("sex"));//性别
+            biLiBiLiInfoEntity.setUid(uid);//uid
+
+        }
+        return biLiBiLiInfoEntity;
+    }
+
     /**
      * 转发动态
      * @param resultEntity 登录返回的数据
@@ -315,5 +337,6 @@ public class BiLiBiLiApi {
 
         Warma.post(url,data,requestProperty);
     }
+
 
 }
