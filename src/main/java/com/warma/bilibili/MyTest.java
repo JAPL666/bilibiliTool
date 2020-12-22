@@ -28,6 +28,18 @@ public class MyTest {
 
         //获取已过期的抽奖动态id
         HashMap<String, String> expiredDynamicIdList = biLiBiLiApi.getExpiredDynamicIdList("281120836");
-        System.out.println(expiredDynamicIdList);
+        for (String dynamicId:expiredDynamicIdList.keySet()){
+            //检测是否中奖
+            if(biLiBiLiApi.isWinning(dynamicId,"281120836")){
+                //中奖
+                System.out.println("恭喜中奖了！");
+                System.out.println("动态id："+dynamicId+"  uid："+expiredDynamicIdList.get(dynamicId));
+            }else{
+                //没中奖
+                ResultEntity resultEntity = new ResultEntity();
+                //删除没中奖的动态
+                biLiBiLiApi.rm_dynamic(resultEntity,dynamicId);
+            }
+        }
     }
 }
