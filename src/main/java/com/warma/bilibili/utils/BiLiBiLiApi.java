@@ -138,6 +138,77 @@ public class BiLiBiLiApi {
         }
         return map;
     }
+
+    /**
+     * 获取已经转发的过期动态id
+     * @param host_uid 自己的uid
+     * @return 过期的动态id
+     */
+    public HashMap<String,String> getExpiredDynamicIdList(String host_uid){
+        HashMap<String,String> map=new HashMap<>();
+
+        String offset_dynamic_id="0";
+
+        boolean bool=true;
+        while (bool){
+            String url="https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/space_history?visitor_uid=29204204&host_uid="+host_uid+"&offset_dynamic_id="+offset_dynamic_id+"&platform=web";
+            ResultEntity result = Warma.get(url, new HashMap<>());
+
+            assert result != null;
+            String res = result.result;
+            JSONObject json = new JSONObject(res);
+
+            //如果数据为空停止
+            if(json.getJSONObject("data").getInt("has_more")==1){
+                bool=false;
+            }
+
+            int has_more = json.getJSONObject("data").getInt("has_more");
+            if(has_more!=0){
+                JSONArray cardArray = json.getJSONObject("data").getJSONArray("cards");
+                for (int i = 0; i < cardArray.length(); i++) {
+                    JSONObject cards = cardArray.getJSONObject(i);
+                    String card = cards.getString("card");
+                    card=Warma.unicodeDecode(card).replace("\\","");
+
+                    if(!card.contains("互动抽奖")){
+                        continue;
+                    }
+                    JSONObject desc = cards.getJSONObject("desc");
+
+                    if(desc.toString().contains("dynamic_id_str")){
+                        //动态ID
+                        String dynamic_id= desc.getString("dynamic_id_str").trim();
+                        offset_dynamic_id=dynamic_id;
+
+                        if(card.contains("orig_dy_id")){
+
+                            //源UID
+                            String[] uids = Warma.regex("\"uid\":([^\"]+),", card).split("\n");
+                            String uid=uids[uids.length-1].trim();
+
+                            //源动态ID
+                            String[] orig_dy_id = Warma.regex("orig_dy_id\":([^\"]+),", card).split("\n");
+                            if(!orig_dy_id[0].trim().equals("0")){
+                                dynamic_id=orig_dy_id[0].trim();
+                            }
+
+                            //如果抽奖过期
+                            if(!isLottery(dynamic_id)){
+                                map.put(dynamic_id,uid);
+                            }
+                        }else{
+                            //如果抽奖过期
+                            if(isLottery(dynamic_id)){
+                                map.put(dynamic_id,host_uid);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return map;
+    }
     /**
      * 检查抽奖是否过期
      * @param dynamicId 动态id
