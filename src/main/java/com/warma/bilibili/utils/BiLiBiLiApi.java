@@ -188,19 +188,13 @@ public class BiLiBiLiApi {
                             String[] uids = Warma.regex("\"uid\":([^\"]+),", card).split("\n");
                             String uid=uids[uids.length-1].trim();
 
-                            //源动态ID
-                            String[] orig_dy_id = Warma.regex("orig_dy_id\":([^\"]+),", card).split("\n");
-                            if(!orig_dy_id[0].trim().equals("0")){
-                                dynamic_id=orig_dy_id[0].trim();
-                            }
-
                             //如果抽奖过期
                             if(!isLottery(dynamic_id)){
                                 map.put(dynamic_id,uid);
                             }
                         }else{
                             //如果抽奖过期
-                            if(isLottery(dynamic_id)){
+                            if(!isLottery(dynamic_id)){
                                 map.put(dynamic_id,host_uid);
                             }
                         }
