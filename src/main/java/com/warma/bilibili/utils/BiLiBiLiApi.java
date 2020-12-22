@@ -140,9 +140,9 @@ public class BiLiBiLiApi {
     }
 
     /**
-     * 获取已经转发的过期动态id
+     * 获取已经开奖的动态id
      * @param host_uid 自己的uid
-     * @return 过期的动态id
+     * @return 已经开奖的动态id
      */
     public HashMap<String,String> getExpiredDynamicIdList(String host_uid){
         HashMap<String,String> map=new HashMap<>();
