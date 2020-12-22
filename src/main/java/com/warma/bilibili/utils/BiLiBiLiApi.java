@@ -1,17 +1,20 @@
-package com.warma.bilibili;
+package com.warma.bilibili.utils;
 
 import com.warma.bilibili.entity.BiLiBiLiEntity;
 import com.warma.bilibili.entity.ResultEntity;
-import com.warma.bilibili.utils.QRCode;
-import com.warma.bilibili.utils.Warma;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class BiLiBiLiApi {
 
-    //扫码登录
+    /**
+     * 扫码登录
+     * @return 登录成功后的数据
+     */
     public ResultEntity login(){
         String loginUrl="https://passport.bilibili.com/qrcode/getLoginUrl";
         ResultEntity loginResult = Warma.get(loginUrl, new HashMap<>());
@@ -21,10 +24,12 @@ public class BiLiBiLiApi {
         JSONObject data = json.getJSONObject("data");
         String url = data.getString("url");
         String oauthKey = data.getString("oauthKey");
-
-        System.out.println(url);
-        String path="C:\\Users\\86176\\Desktop\\bilibiliLogin.png";
-        QRCode.createQRCodeImage(url,180,180,path);
+        try {
+            String path=new File("").getCanonicalPath()+"\\bilibiliLogin.png";
+            QRCode.createQRCodeImage(url,180,180,path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         while(true){
             String loginInfoUrl="https://passport.bilibili.com/qrcode/getLoginInfo";
@@ -53,7 +58,11 @@ public class BiLiBiLiApi {
             }
         }
     }
-    //获取有效的抽奖动态id
+    /**
+     * 获取有效的抽奖动态id
+     * @param host_uid 要获取动态id的uid
+     * @return 抽奖动态id
+     */
     public HashMap<String,String> getDynamicIdList(String host_uid){
         HashMap<String,String> map=new HashMap<>();
 
@@ -129,7 +138,11 @@ public class BiLiBiLiApi {
         }
         return map;
     }
-    //检查抽奖是否过期
+    /**
+     * 检查抽奖是否过期
+     * @param dynamicId 动态id
+     * @return 检测结果
+     */
     public boolean isLottery(String dynamicId){
         String url="https://api.vc.bilibili.com/lottery_svr/v1/lottery_svr/lottery_notice?dynamic_id="+dynamicId;
         ResultEntity res = Warma.get(url, new HashMap<>());
@@ -142,7 +155,12 @@ public class BiLiBiLiApi {
             return !result.contains("lottery_result");
         }
     }
-    //检测是否关注
+
+    /**
+     * 查看是否关注
+     * @param resultEntity 登录返回的数据
+     * @param mid 检测是否关注的uid
+     */
     public boolean is_followed(ResultEntity resultEntity,String mid){
         String url="https://api.bilibili.com/x/space/acc/info?mid="+mid+"&jsonp=jsonp";
         HashMap<String,String> requestProperty=new HashMap<>();
@@ -152,7 +170,13 @@ public class BiLiBiLiApi {
         assert result != null;
         return new JSONObject(result.result).getJSONObject("data").getBoolean("is_followed");
     }
-    //转发动态
+
+    /**
+     * 转发动态
+     * @param resultEntity 登录返回的数据
+     * @param biLiBiLiEntity 哔哩哔哩实体类
+     * @param str 转发内容
+     */
     public void dynamic_repost(ResultEntity resultEntity, BiLiBiLiEntity biLiBiLiEntity,String str){
         String url="https://api.vc.bilibili.com/dynamic_repost/v1/dynamic_repost/repost";
 
@@ -165,4 +189,43 @@ public class BiLiBiLiApi {
 
         Warma.post(url,data,requestProperty);
     }
+
+    /**
+     * 删除动态
+     * @param resultEntity 登录返回的数据
+     * @param dynamic_id 动态id
+     */
+    public void rm_dynamic(ResultEntity resultEntity, String dynamic_id){
+        String url="https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/rm_dynamic";
+
+        String bili_jct = resultEntity.getCookieMap().get("bili_jct");
+        String data="dynamic_id="+dynamic_id+"&csrf_token="+bili_jct+"&csrf="+bili_jct;
+
+        HashMap<String,String> requestProperty=new HashMap<>();
+        requestProperty.put("Cookie",resultEntity.getCookies());
+        requestProperty.put("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0");
+
+        Warma.post(url,data,requestProperty);
+    }
+
+    /**
+     * 关注和取关
+     * @param resultEntity 登录返回的数据
+     * @param fid 要取关的uid
+     * @param act 关注和取关 1关注 2取关
+     */
+    public void modify(ResultEntity resultEntity, String fid,int act){
+        String url="https://api.bilibili.com/x/relation/modify";
+
+        String bili_jct = resultEntity.getCookieMap().get("bili_jct");
+
+        String data="fid="+fid+"&act="+act+"&re_src=11&jsonp=jsonp&csrf="+bili_jct;
+
+        HashMap<String,String> requestProperty=new HashMap<>();
+        requestProperty.put("Cookie",resultEntity.getCookies());
+        requestProperty.put("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0");
+
+        Warma.post(url,data,requestProperty);
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.warma.bilibili;
 
 import com.warma.bilibili.entity.ResultEntity;
+import com.warma.bilibili.utils.BiLiBiLiApi;
 
 import java.util.HashMap;
 
@@ -20,7 +21,8 @@ public class MyTest {
             System.out.println("UID："+allList.get(dyid)+"  动态ID："+dyid);
         }
 
-        ResultEntity login = biLiBiLiApi.login();
-        System.out.println(biLiBiLiApi.is_followed(login,"15547141")?"已经关注！":"没有关注！");
+//        ResultEntity login = biLiBiLiApi.login();
+//        System.out.println(biLiBiLiApi.is_followed(login,"15547141")?"已经关注！":"没有关注！");
+
     }
 }
