@@ -1,4 +1,11 @@
 spring:
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://warma.fun:3306/bilibili?serverTimezone=UTC&characterEncoding=utf-8
+      username: bilibili
+      password: bilibili520
+
   thymeleaf:
     enabled: true  #开启thymeleaf视图解析
     encoding: utf-8  #编码
@@ -6,3 +13,6 @@ spring:
     cache: false  #是否使用缓存
     mode: HTML  #严格的HTML语法模式
     suffix: .html  #后缀名
+
+server:
+  port: 2233

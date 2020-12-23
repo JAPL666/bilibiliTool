@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 public class Scheduler {
 
     @Scheduled(cron = "")
-    public void getdyIdList(){
+    public void getdynamicIdList(){
 
     }
 }
