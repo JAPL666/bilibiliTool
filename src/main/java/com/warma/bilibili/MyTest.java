@@ -1,9 +1,11 @@
 package com.warma.bilibili;
 
+import com.warma.bilibili.entity.BiLiBiLiEntity;
 import com.warma.bilibili.entity.ResultEntity;
 import com.warma.bilibili.utils.BiLiBiLiApi;
 import com.warma.bilibili.utils.QRCode;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MyTest {
@@ -49,7 +51,11 @@ public class MyTest {
 //        String base64 = QRCode.createQRCodeImageBase64("https://baidu.com", 180, 180);
 //        System.out.println(base64);
 
-        biLiBiLiApi.getExpiredDynamicIdList("281120836");
+        ArrayList<BiLiBiLiEntity> list = biLiBiLiApi.getExpiredDynamicIdList("281120836");
+        for (BiLiBiLiEntity biLiBiLiEntity : list) {
+            System.out.println(biLiBiLiEntity.getDynamicId());
+            System.out.println(biLiBiLiEntity.getHost_uid());
+        }
 
     }
 }
