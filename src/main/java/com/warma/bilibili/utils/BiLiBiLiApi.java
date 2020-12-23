@@ -60,14 +60,16 @@ public class BiLiBiLiApi {
             }
         }
     }
-    /**
-     * 获取有效的抽奖动态id
-     * @param host_uid 要获取动态id的uid
-     * @return 抽奖动态id
-     */
-    public HashMap<String,String> getDynamicIdList(String host_uid){
-        HashMap<String,String> map=new HashMap<>();
 
+    /**
+     *
+     * @param host_uid 用户uid
+     * @return 可用的抽奖动态id List
+     */
+    public ArrayList<BiLiBiLiEntity> getDynamicIdList(String host_uid){
+        ArrayList<BiLiBiLiEntity> list=new ArrayList<>();
+
+        //获取下一页动态需要用到动态id
         String offset_dynamic_id="0";
 
         boolean bool=true;
@@ -80,65 +82,81 @@ public class BiLiBiLiApi {
             JSONObject json = new JSONObject(res);
 
             int has_more = json.getJSONObject("data").getInt("has_more");
+            //判断动态的数据是否为空
             if(has_more!=0){
                 JSONArray cardArray = json.getJSONObject("data").getJSONArray("cards");
                 for (int i = 0; i < cardArray.length(); i++) {
                     JSONObject cards = cardArray.getJSONObject(i);
-                    String card = cards.getString("card");
-                    card=Warma.unicodeDecode(card).replace("\\","");
 
-                    if(!card.contains("互动抽奖")){
+                    //动态的json对象
+                    JSONObject cardObject = new JSONObject(cards.getString("card"));
+
+                    //动态信息json对象
+                    JSONObject desc = cards.getJSONObject("desc");
+
+                    //动态的发布时间
+                    long timestamp = desc.getLong("timestamp");
+
+//                    SimpleDateFormat format =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//                    String time = format.format(timestamp*1000);
+
+                    //当前使劲按
+                    long current = System.currentTimeMillis()/1000;
+                    //当前时间减开奖时间
+                    long x=current-timestamp;
+                    long x1=((60*60)*24)*30;
+
+                    //发布时间超过一个月则停止
+                    if(x>x1){
+                        bool=false;
+                        break;
+                    }
+
+
+                    //跳过没有动态id的动态
+                    if(!desc.toString().contains("dynamic_id_str")){
                         continue;
                     }
 
-                    JSONObject desc = cards.getJSONObject("desc");
+                    //本条动态的id
+                    String dynamic_id= desc.getString("dynamic_id_str");
+                    offset_dynamic_id=dynamic_id;
 
-                    if(desc.toString().contains("dynamic_id_str")){
-                        //动态的时间戳
-                        long timestamp = desc.getLong("timestamp");
-                        long time = System.currentTimeMillis()/1000;
-                        long x=time-timestamp;
-                        long x1=((60*60)*24)*30;
-                        if(x>x1){
-                            //System.out.println("时间超过一个月");
-                            bool=false;
-                        }else{
-                            //动态ID
-                            String dynamic_id= desc.getString("dynamic_id_str").trim();
-                            offset_dynamic_id=dynamic_id;
+                    //储存动态id和uid的实体类
+                    BiLiBiLiEntity biLiBiLiEntity=new BiLiBiLiEntity();
 
-                            if(card.contains("orig_dy_id")){
-                                //别人转发的抽奖动态
+                    //解析过json转字符串
+                    String card = cardObject.toString();
 
-                                //源UID
-                                String[] uids = Warma.regex("\"uid\":([^\"]+),", card).split("\n");
-                                String uid=uids[uids.length-1].trim();
+                    if(card.contains("点击互动抽奖查看")){
+                        //跳过开奖通知动态
+                        continue;
+                    }else if(card.contains("origin_extension")){
+                        //别人转发的抽奖动态
+                        long dyid = cardObject.getJSONObject("item").getLong("orig_dy_id");
 
-                                //源动态ID
-                                String[] orig_dy_id = Warma.regex("orig_dy_id\":([^\"]+),", card).split("\n");
-                                if(!orig_dy_id[0].trim().equals("0")){
-                                    dynamic_id=orig_dy_id[0].trim();
-                                }
+                        //动态id
+                        biLiBiLiEntity.setDynamicId(String.valueOf(dyid));
+                        //发布动态的uid
+                        biLiBiLiEntity.setHost_uid(String.valueOf(getSender_uid(dyid)));
 
-                                //如果抽奖没过期
-                                if(isLottery(dynamic_id)){
-                                    map.put(dynamic_id,uid);
-                                }
+                    }else if(card.contains("200b互动抽奖")){
+                        //此用户发布的抽奖动态
 
-                            }else{
-                                //抽奖动态
-
-                                //如果抽奖没过期
-                                if(isLottery(dynamic_id)){
-                                    map.put(dynamic_id,host_uid);
-                                }
-                            }
-                        }
+                        //动态id
+                        biLiBiLiEntity.setDynamicId(dynamic_id);
+                        //发布动态的uid
+                        biLiBiLiEntity.setHost_uid(host_uid);
                     }
+
+                    list.add(biLiBiLiEntity);
                 }
+            }else{
+                //如果数据为空停止
+                bool=false;
             }
         }
-        return map;
+        return list;
     }
 
     /**
