@@ -49,7 +49,7 @@ public class MyTest {
 //        String base64 = QRCode.createQRCodeImageBase64("https://baidu.com", 180, 180);
 //        System.out.println(base64);
 
-        biLiBiLiApi.getExpiredDynamicIdList("401742377");
+        biLiBiLiApi.getExpiredDynamicIdList("281120836");
 
     }
 }
