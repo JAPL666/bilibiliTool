@@ -2,17 +2,23 @@ package com.warma.bilibili.controllers;
 
 import com.warma.bilibili.entity.BiLiBiLiInfoEntity;
 import com.warma.bilibili.entity.ResultEntity;
+import com.warma.bilibili.service.impl.BiLiBiLiServiceImpl;
 import com.warma.bilibili.utils.BiLiBiLiApi;
 import com.warma.bilibili.utils.Warma;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
 @RestController
 public class LoginController {
+
+    @Resource(name="biLiBiLiServiceImpl")
+    BiLiBiLiServiceImpl service;
+
     @RequestMapping("checkLogin")
     public Object checkLogin(HttpServletRequest request){
         BiLiBiLiInfoEntity entity=new BiLiBiLiInfoEntity();
@@ -35,6 +41,9 @@ public class LoginController {
             //访问图片URL，把图片转base64
             entity.setFace(Warma.getImageBase64(entity.getFace()));
             entity.setCode(0);
+
+            //插入数据库
+            service.insertCookies(entity);
         }else if(jsonObject.getInt("data")==-2){
             //已经登录过了
             entity.setCode(1);

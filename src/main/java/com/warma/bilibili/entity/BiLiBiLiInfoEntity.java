@@ -7,6 +7,15 @@ public class BiLiBiLiInfoEntity {
     Integer level;
     String sex;
     Integer code;
+    String cookies;
+
+    public String getCookies() {
+        return cookies;
+    }
+
+    public void setCookies(String cookies) {
+        this.cookies = cookies;
+    }
 
     public Integer getCode() {
         return code;
