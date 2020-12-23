@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>哔哩哔哩扫码登录</title>
+    <!--字节跳动jQuery-->
+    <script src="https://s3.pstatp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+            getApi();
+            function getApi() {
+                $.ajax({
+                    url: 'http://127.0.0.1:8080/checkLogin',
+                    type: 'get',
+                    success: function (data) {
+                        if (data === 0) {
+                            alert("登录成功！");
+                        }else if(data===2){
+                            //设置请求api接口时间
+                            setTimeout(getApi, 2 * 1000);
+                        }
+                    }
+                });
+            }
+
+    </script>
+</head>
+<body>
+
+<img alt="扫描二维码登录哔哩哔哩！" th:src="${base64}" src=""/>
+</body>
+</html>
