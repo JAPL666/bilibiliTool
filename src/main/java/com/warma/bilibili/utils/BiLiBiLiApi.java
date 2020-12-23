@@ -62,7 +62,7 @@ public class BiLiBiLiApi {
     }
 
     /**
-     *
+     * 获取可用的抽奖动态id
      * @param host_uid 用户uid
      * @return 可用的抽奖动态id List
      */
