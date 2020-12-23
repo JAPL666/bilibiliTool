@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class BiLiBiLiApi {
@@ -146,8 +146,8 @@ public class BiLiBiLiApi {
      * @param host_uid 自己的uid
      * @return 已经开奖的动态id
      */
-    public BiLiBiLiEntity getExpiredDynamicIdList(String host_uid){
-        BiLiBiLiEntity biLiBiLiEntity=new BiLiBiLiEntity();
+    public ArrayList<BiLiBiLiEntity> getExpiredDynamicIdList(String host_uid){
+        ArrayList<BiLiBiLiEntity> list=new ArrayList<>();
 
         //获取下一页动态需要用到动态id
         String offset_dynamic_id="0";
@@ -173,7 +173,6 @@ public class BiLiBiLiApi {
 
                     //动态信息json对象
                     JSONObject desc = cards.getJSONObject("desc");
-
 
                     //动态的发布时间
                     long timestamp = desc.getLong("timestamp");
@@ -203,6 +202,9 @@ public class BiLiBiLiApi {
                     String dynamic_id= desc.getString("dynamic_id_str");
                     offset_dynamic_id=dynamic_id;
 
+                    //储存动态id和uid的实体类
+                    BiLiBiLiEntity biLiBiLiEntity=new BiLiBiLiEntity();
+
                     //解析过json转字符串
                     String card = cardObject.toString();
 
@@ -226,13 +228,15 @@ public class BiLiBiLiApi {
                         //发布动态的uid
                         biLiBiLiEntity.setHost_uid(host_uid);
                     }
+
+                    list.add(biLiBiLiEntity);
                 }
             }else{
                 //如果数据为空停止
                 bool=false;
             }
         }
-        return biLiBiLiEntity;
+        return list;
     }
     /**
      * 检查抽奖是否过期
