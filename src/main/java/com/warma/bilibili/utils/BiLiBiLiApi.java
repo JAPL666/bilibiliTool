@@ -138,7 +138,7 @@ public class BiLiBiLiApi {
                         dyid = String.valueOf(cardObject.getJSONObject("item").getLong("orig_dy_id"));
 
                         //动态id
-                        biLiBiLiEntity.setDynamicId(String.valueOf(dyid));
+                        biLiBiLiEntity.setDynamicId(dyid);
                         //发布动态的uid
                         biLiBiLiEntity.setHost_uid(String.valueOf(getSender_uid(dyid)));
 
@@ -243,24 +243,14 @@ public class BiLiBiLiApi {
                         //别人转发的抽奖动态
                         dyid = String.valueOf(cardObject.getJSONObject("item").getLong("orig_dy_id"));
 
-                        //动态id
-                        biLiBiLiEntity.setDynamicId(String.valueOf(dyid));
-                        //发布动态的uid
-                        biLiBiLiEntity.setHost_uid(String.valueOf(getSender_uid(dyid)));
-
-                    }else if(card.contains("200b互动抽奖")){
-                        //此用户发布的抽奖动态
-
-                        dyid=dynamic_id;
-
-                        //动态id
+                        //自己转发的抽奖动态id
                         biLiBiLiEntity.setDynamicId(dynamic_id);
                         //发布动态的uid
-                        biLiBiLiEntity.setHost_uid(host_uid);
+                        biLiBiLiEntity.setHost_uid(String.valueOf(getSender_uid(dyid)));
                     }
 
                     //判断抽奖是否过期
-                    if(isLottery(dyid)){
+                    if(!isLottery(dyid)){
                         list.add(biLiBiLiEntity);
                     }
 
