@@ -51,6 +51,8 @@ public class MyTest {
 //        String base64 = QRCode.createQRCodeImageBase64("https://baidu.com", 180, 180);
 //        System.out.println(base64);
 
+
+        //获取自己转发的过期抽奖动态
         ArrayList<BiLiBiLiEntity> list = biLiBiLiApi.getExpiredDynamicIdList("281120836");
         for (BiLiBiLiEntity biLiBiLiEntity : list) {
             System.out.println(biLiBiLiEntity.getDynamicId());
