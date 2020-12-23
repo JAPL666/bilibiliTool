@@ -4,9 +4,7 @@ import com.warma.bilibili.entity.ResultEntity;
 
 import java.io.*;
 import java.math.BigInteger;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
+import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.*;
@@ -208,5 +206,25 @@ public class Warma {
     //获取指定范围的随机数
     public static int Random(int s,int d){
         return (int)(Math.random()*(d-s)+s);
+    }
+    public static String getImageBase64(String imageUrl){
+        ByteArrayOutputStream outputStream=new ByteArrayOutputStream();
+        try {
+            URL url=new URL(imageUrl);
+            HttpURLConnection connection=(HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            InputStream inputStream = connection.getInputStream();
+
+            int length=0;
+            byte[] data=new byte[1024];
+            while((length=inputStream.read(data))!=-1){
+                outputStream.write(data,0,length);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String base64 = Base64.getEncoder().encodeToString(outputStream.toByteArray());
+        return "data:image/jpeg;base64,"+base64;
     }
 }

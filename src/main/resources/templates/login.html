@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>哔哩哔哩扫码登录</title>
+    <title>哔哩哔哩自动抽奖工具</title>
     <!--字节跳动jQuery-->
     <script src="https://s3.pstatp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js"></script>
     <script>
@@ -12,9 +12,14 @@
                     url: 'http://127.0.0.1:8080/checkLogin',
                     type: 'get',
                     success: function (data) {
-                        if (data === 0) {
-                            alert("登录成功！");
-                        }else if(data===2){
+                        if (data.code === 0) {
+                            //alert("登录成功！");
+                            document.getElementById("warma").style.display="none";
+                            document.getElementById("name").innerText=data.name;
+                            document.getElementById("face").setAttribute("src",data.face)
+                            document.getElementById("japl").style.visibility="visible";
+
+                        }else if(data.code===2){
                             //设置请求api接口时间
                             setTimeout(getApi, 2 * 1000);
                         }
@@ -23,9 +28,33 @@
             }
 
     </script>
+    <style>
+        body{
+            background-image: url("http://warma.fun:520/images/bilibili.png");
+        }
+        .style{
+            text-align: center;
+            width:350px;
+            height: 420px;
+            margin-top: 17%;
+            margin-left: 59%;
+            padding-top: 25px;
+            background: #ffffff;
+        }
+    </style>
 </head>
 <body>
 
-<img alt="扫描二维码登录哔哩哔哩！" th:src="${base64}" src=""/>
+<div class="style">
+    <div id="warma">
+        <h2>扫描码登录哔哩哔哩！</h2>
+        <img alt="二维码" th:src="${base64}" src=""/>
+    </div>
+    <div style="visibility: hidden" id="japl">
+        <img id="face" alt="头像" src=""/>
+        <h2 id="name"></h2>
+        <h2>登录成功！</h2>
+    </div>
+</div>
 </body>
 </html>
