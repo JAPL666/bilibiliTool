@@ -30,6 +30,7 @@ public class LoginController {
         assert loginInfoResult != null;
         String res = loginInfoResult.result;
         String cookies = loginInfoResult.cookies;
+        HashMap<String, String> cookieMap = loginInfoResult.cookieMap;
 
         JSONObject jsonObject=new JSONObject(loginInfoResult.result);
         boolean status = jsonObject.getBoolean("status");
@@ -42,6 +43,7 @@ public class LoginController {
             entity.setFace(Warma.getImageBase64(entity.getFace()));
             entity.setCode(0);
             entity.setCookies(cookies);
+            entity.setCookieMap(cookieMap);
 
             //插入数据库
             service.insertCookies(entity);

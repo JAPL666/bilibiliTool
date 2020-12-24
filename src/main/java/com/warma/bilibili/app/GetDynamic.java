@@ -1,7 +1,9 @@
 package com.warma.bilibili.app;
 
 import com.warma.bilibili.entity.BiLiBiLiInfoEntity;
+import com.warma.bilibili.entity.ResultEntity;
 import com.warma.bilibili.service.impl.BiLiBiLiServiceImpl;
+import com.warma.bilibili.utils.BiLiBiLiApi;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -26,6 +28,12 @@ public class GetDynamic {
             for (BiLiBiLiInfoEntity biLiBiLiInfoEntity : userInfo) {
                 System.out.println(biLiBiLiInfoEntity.getCookies());
                 System.out.println(biLiBiLiInfoEntity.getName());
+
+
+                ResultEntity resultEntity = new ResultEntity();
+                new BiLiBiLiApi().is_followed(resultEntity,"");
+
+
             }
         }
     }

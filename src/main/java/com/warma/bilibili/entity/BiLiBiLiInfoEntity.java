@@ -1,5 +1,7 @@
 package com.warma.bilibili.entity;
 
+import java.util.HashMap;
+
 public class BiLiBiLiInfoEntity {
     Integer uid;
     String name;
@@ -8,6 +10,15 @@ public class BiLiBiLiInfoEntity {
     String sex;
     Integer code;
     String cookies;
+    HashMap<String, String> cookieMap;
+
+    public HashMap<String, String> getCookieMap() {
+        return cookieMap;
+    }
+
+    public void setCookieMap(HashMap<String, String> cookieMap) {
+        this.cookieMap = cookieMap;
+    }
 
     public String getCookies() {
         return cookies;
