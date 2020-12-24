@@ -19,7 +19,7 @@ public interface BiLiBiLiMapper {
     List<BiLiBiLiInfoEntity> findUserInfo();
 
     //插入动态ID和UID
-    @Insert("insert into dynamicid_and_uid(dynamicId,uid) values(#{dynamicId},#{uid})")
+    @Insert("insert ignore into dynamicid_and_uid(dynamicId,uid) values(#{dynamicId},#{uid})")
     int insertDynamicidAndUid(DynamicidAndUid dynamicidAndUid);
 
 

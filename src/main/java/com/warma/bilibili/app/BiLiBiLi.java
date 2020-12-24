@@ -48,12 +48,13 @@ public class BiLiBiLi {
                         //等级大于0才执行
                         if(info.getLevel()>0){
 
+                            //获取用户转发或者自己发的抽奖动态
                             ArrayList<BiLiBiLiEntity> dynamicIdList = biLiBiLiApi.getDynamicIdList(String.valueOf(info.getUid()));
                             if(dynamicIdList.size()!=0){
 
                                 for (BiLiBiLiEntity biLiBiLiEntity : dynamicIdList) {
                                     System.out.println("动态ID："+biLiBiLiEntity.getDynamicId());
-                                    System.out.println("UID："+biLiBiLiEntity.getDynamicId());
+                                    System.out.println("UID："+biLiBiLiEntity.getHost_uid());
 //                                    //获取关注状态
 //                                    boolean followed = biLiBiLiApi.is_followed(biLiBiLiInfoEntity, String.valueOf(info.getUid()));
 //                                    //如果没有关注
