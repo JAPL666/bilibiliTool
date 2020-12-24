@@ -1,15 +1,15 @@
 package com.warma.bilibili.entity;
 
 public class DynamicidAndUid {
-    String dynamicid;
+    String dynamicId;
     String uid;
 
-    public String getDynamicid() {
-        return dynamicid;
+    public String getDynamicId() {
+        return dynamicId;
     }
 
-    public void setDynamicid(String dynamicid) {
-        this.dynamicid = dynamicid;
+    public void setDynamicId(String dynamicId) {
+        this.dynamicId = dynamicId;
     }
 
     public String getUid() {

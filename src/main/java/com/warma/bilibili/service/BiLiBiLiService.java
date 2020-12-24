@@ -12,5 +12,5 @@ public interface BiLiBiLiService {
 
     int insertDynamicidAndUid(DynamicidAndUid dynamicidAndUid);
 
-    List<BiLiBiLiInfoEntity> findDynamicidAndUid();
+    List<DynamicidAndUid> findDynamicidAndUid();
 }

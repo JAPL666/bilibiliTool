@@ -70,7 +70,7 @@ public class BiLiBiLi {
 
                                     DynamicidAndUid dynamicidAndUid = new DynamicidAndUid();
                                     //抽奖动态ID
-                                    dynamicidAndUid.setDynamicid(biLiBiLiEntity.getDynamicId());
+                                    dynamicidAndUid.setDynamicId(biLiBiLiEntity.getDynamicId());
                                     //发动态的人的UID
                                     dynamicidAndUid.setUid(biLiBiLiEntity.getHost_uid());
                                     //动态ID和UID插入数据库

@@ -29,7 +29,7 @@ public class BiLiBiLiServiceImpl implements BiLiBiLiService {
     }
 
     @Override
-    public List<BiLiBiLiInfoEntity> findDynamicidAndUid() {
+    public List<DynamicidAndUid> findDynamicidAndUid() {
         return mapper.findDynamicidAndUid();
     }
 }

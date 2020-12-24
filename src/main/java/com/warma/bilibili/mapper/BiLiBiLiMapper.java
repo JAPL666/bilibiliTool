@@ -25,7 +25,7 @@ public interface BiLiBiLiMapper {
 
     //查询动态ID和UID
     @Select("select * from dynamicid_and_uid")
-    List<BiLiBiLiInfoEntity> findDynamicidAndUid();
+    List<DynamicidAndUid> findDynamicidAndUid();
 
 
 }
