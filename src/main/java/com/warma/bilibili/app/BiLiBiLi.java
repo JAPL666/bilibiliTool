@@ -66,7 +66,7 @@ public class BiLiBiLi {
                                     //自己的UID
                                     entity.setMyuid(String.valueOf(biLiBiLiInfoEntity.getUid()));
                                     //转发抽奖动态
-                                    biLiBiLiApi.dynamic_repost(biLiBiLiInfoEntity,entity,"我收下了、、、、、");
+                                    biLiBiLiApi.dynamic_repost(biLiBiLiInfoEntity,entity,"礼物我收下了！！！！");
 
                                     DynamicidAndUid dynamicidAndUid = new DynamicidAndUid();
                                     //抽奖动态ID
