@@ -29,10 +29,12 @@ public class GetDynamic {
                 System.out.println(biLiBiLiInfoEntity.getCookies());
                 System.out.println(biLiBiLiInfoEntity.getName());
 
-
-                ResultEntity resultEntity = new ResultEntity();
-                new BiLiBiLiApi().is_followed(resultEntity,"");
-
+                boolean followed = new BiLiBiLiApi().is_followed(biLiBiLiInfoEntity, "53456");
+                if(followed){
+                    System.out.println("已经关注了");
+                }else{
+                    System.out.println("没有关注");
+                }
 
             }
         }

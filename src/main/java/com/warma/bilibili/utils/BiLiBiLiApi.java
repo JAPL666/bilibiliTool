@@ -316,13 +316,13 @@ public class BiLiBiLiApi {
 
     /**
      * 查看是否关注
-     * @param resultEntity 登录返回的数据
+     * @param entity 登录返回的数据
      * @param mid 检测是否关注的uid
      */
-    public boolean is_followed(ResultEntity resultEntity,String mid){
+    public boolean is_followed(BiLiBiLiInfoEntity entity,String mid){
         String url="https://api.bilibili.com/x/space/acc/info?mid="+mid+"&jsonp=jsonp";
         HashMap<String,String> requestProperty=new HashMap<>();
-        requestProperty.put("Cookie",resultEntity.getCookies());
+        requestProperty.put("Cookie",entity.getCookies());
         ResultEntity result = Warma.get(url, requestProperty);
 
         assert result != null;
@@ -352,18 +352,18 @@ public class BiLiBiLiApi {
 
     /**
      * 转发动态
-     * @param resultEntity 登录返回的数据
+     * @param entity 登录返回的数据
      * @param biLiBiLiEntity 哔哩哔哩实体类
      * @param str 转发内容
      */
-    public void dynamic_repost(ResultEntity resultEntity, BiLiBiLiEntity biLiBiLiEntity,String str){
+    public void dynamic_repost(BiLiBiLiInfoEntity entity, BiLiBiLiEntity biLiBiLiEntity,String str){
         String url="https://api.vc.bilibili.com/dynamic_repost/v1/dynamic_repost/repost";
 
-        String bili_jct = resultEntity.getCookieMap().get("bili_jct");
+        String bili_jct = entity.getCookieMap().get("bili_jct");
         String data="uid="+biLiBiLiEntity.getMyuid()+"&dynamic_id="+biLiBiLiEntity.getDynamicId()+"&content="+str+"&extension={\"emoji_type\":1}&at_uids=&ctrl=[]&csrf_token="+bili_jct+"&csrf="+bili_jct;
 
         HashMap<String,String> requestProperty=new HashMap<>();
-        requestProperty.put("Cookie",resultEntity.getCookies());
+        requestProperty.put("Cookie",entity.getCookies());
         requestProperty.put("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0");
 
         Warma.post(url,data,requestProperty);
@@ -371,17 +371,17 @@ public class BiLiBiLiApi {
 
     /**
      * 删除动态
-     * @param resultEntity 登录返回的数据
+     * @param entity 登录返回的数据
      * @param dynamic_id 动态id
      */
-    public void rm_dynamic(ResultEntity resultEntity, String dynamic_id){
+    public void rm_dynamic(BiLiBiLiInfoEntity entity, String dynamic_id){
         String url="https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/rm_dynamic";
 
-        String bili_jct = resultEntity.getCookieMap().get("bili_jct");
+        String bili_jct = entity.getCookieMap().get("bili_jct");
         String data="dynamic_id="+dynamic_id+"&csrf_token="+bili_jct+"&csrf="+bili_jct;
 
         HashMap<String,String> requestProperty=new HashMap<>();
-        requestProperty.put("Cookie",resultEntity.getCookies());
+        requestProperty.put("Cookie",entity.getCookies());
         requestProperty.put("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0");
 
         Warma.post(url,data,requestProperty);
@@ -389,19 +389,19 @@ public class BiLiBiLiApi {
 
     /**
      * 关注和取关
-     * @param resultEntity 登录返回的数据
+     * @param entity 登录返回的数据
      * @param fid 要取关的uid
      * @param act 关注和取关 1关注 2取关
      */
-    public void modify(ResultEntity resultEntity, String fid,int act){
+    public void modify(BiLiBiLiInfoEntity entity, String fid,int act){
         String url="https://api.bilibili.com/x/relation/modify";
 
-        String bili_jct = resultEntity.getCookieMap().get("bili_jct");
+        String bili_jct = entity.getCookieMap().get("bili_jct");
 
         String data="fid="+fid+"&act="+act+"&re_src=11&jsonp=jsonp&csrf="+bili_jct;
 
         HashMap<String,String> requestProperty=new HashMap<>();
-        requestProperty.put("Cookie",resultEntity.getCookies());
+        requestProperty.put("Cookie",entity.getCookies());
         requestProperty.put("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:83.0) Gecko/20100101 Firefox/83.0");
 
         Warma.post(url,data,requestProperty);
