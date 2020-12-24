@@ -27,7 +27,6 @@ public class LoginController {
         String loginInfoUrl="https://passport.bilibili.com/qrcode/getLoginInfo";
         ResultEntity loginInfoResult = Warma.post(loginInfoUrl, "oauthKey=" + oauthKey, new HashMap<>());
 
-        assert loginInfoResult != null;
         String res = loginInfoResult.result;
         String cookies = loginInfoResult.cookies;
         HashMap<String, String> cookieMap = loginInfoResult.cookieMap;
@@ -43,7 +42,7 @@ public class LoginController {
             entity.setFace(Warma.getImageBase64(entity.getFace()));
             entity.setCode(0);
             entity.setCookies(cookies);
-            entity.setCookieMap(cookieMap);
+            entity.setCookieMap(new JSONObject(cookieMap).toString());
 
             //插入数据库
             service.insertCookies(entity);

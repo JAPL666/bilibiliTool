@@ -12,7 +12,7 @@ public class BilibiliToolApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(BilibiliToolApplication.class, args);
-        new BiLiBiLi().getDynamic();
+        //new BiLiBiLi().getDynamic();
     }
 
 }

@@ -21,7 +21,6 @@ public class BiLiBiLiApi {
         String loginUrl="https://passport.bilibili.com/qrcode/getLoginUrl";
         ResultEntity loginResult = Warma.get(loginUrl, new HashMap<>());
 
-        assert loginResult != null;
         JSONObject json = new JSONObject(loginResult.getResult());
         JSONObject data = json.getJSONObject("data");
         String url = data.getString("url");
@@ -37,7 +36,6 @@ public class BiLiBiLiApi {
             String loginInfoUrl="https://passport.bilibili.com/qrcode/getLoginInfo";
             ResultEntity loginInfoResult = Warma.post(loginInfoUrl, "oauthKey=" + oauthKey, new HashMap<>());
 
-            assert loginInfoResult != null;
             String res = loginInfoResult.result;
             String cookies = loginInfoResult.cookies;
 
@@ -77,7 +75,6 @@ public class BiLiBiLiApi {
             String url="https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/space_history?visitor_uid=29204204&host_uid="+host_uid+"&offset_dynamic_id="+offset_dynamic_id+"&platform=web";
             ResultEntity result = Warma.get(url, new HashMap<>());
 
-            assert result != null;
             String res = result.result;
             JSONObject json = new JSONObject(res);
 
@@ -183,7 +180,6 @@ public class BiLiBiLiApi {
             String url="https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/space_history?visitor_uid=29204204&host_uid="+host_uid+"&offset_dynamic_id="+offset_dynamic_id+"&platform=web";
             ResultEntity result = Warma.get(url, new HashMap<>());
 
-            assert result != null;
             String res = result.result;
             JSONObject json = new JSONObject(res);
 
@@ -271,7 +267,6 @@ public class BiLiBiLiApi {
         String url="https://api.vc.bilibili.com/lottery_svr/v1/lottery_svr/lottery_notice?dynamic_id="+dynamicId;
         ResultEntity res = Warma.get(url, new HashMap<>());
 
-        assert res != null;
         String result = res.result;
         if(result.contains("-9999")){
             return false;
@@ -306,7 +301,6 @@ public class BiLiBiLiApi {
         String url="https://api.vc.bilibili.com/lottery_svr/v1/lottery_svr/lottery_notice?dynamic_id="+dynamicId;
         ResultEntity res = Warma.get(url, new HashMap<>());
 
-        assert res != null;
         String result = res.result;
         if(!result.contains("-9999")){
             return new JSONObject(result).getJSONObject("data").getLong("sender_uid");
@@ -335,7 +329,6 @@ public class BiLiBiLiApi {
         String url="https://api.bilibili.com/x/space/acc/info?mid="+uid+"&jsonp=jsonp";
         ResultEntity result = Warma.get(url, new HashMap<>());
 
-        System.out.println(result.result);
         assert result.result !=null;
 
         //-412请求被拦截
@@ -367,7 +360,9 @@ public class BiLiBiLiApi {
     public void dynamic_repost(BiLiBiLiInfoEntity entity, BiLiBiLiEntity biLiBiLiEntity,String str){
         String url="https://api.vc.bilibili.com/dynamic_repost/v1/dynamic_repost/repost";
 
-        String bili_jct = entity.getCookieMap().get("bili_jct");
+        JSONObject jsonObject = new JSONObject(entity.getCookieMap());
+        String bili_jct = jsonObject.getString("bili_jct");
+
         String data="uid="+biLiBiLiEntity.getMyuid()+"&dynamic_id="+biLiBiLiEntity.getDynamicId()+"&content="+str+"&extension={\"emoji_type\":1}&at_uids=&ctrl=[]&csrf_token="+bili_jct+"&csrf="+bili_jct;
 
         HashMap<String,String> requestProperty=new HashMap<>();
@@ -385,7 +380,9 @@ public class BiLiBiLiApi {
     public void rm_dynamic(BiLiBiLiInfoEntity entity, String dynamic_id){
         String url="https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/rm_dynamic";
 
-        String bili_jct = entity.getCookieMap().get("bili_jct");
+        JSONObject jsonObject = new JSONObject(entity.getCookieMap());
+        String bili_jct = jsonObject.getString("bili_jct");
+
         String data="dynamic_id="+dynamic_id+"&csrf_token="+bili_jct+"&csrf="+bili_jct;
 
         HashMap<String,String> requestProperty=new HashMap<>();
@@ -404,7 +401,9 @@ public class BiLiBiLiApi {
     public void modify(BiLiBiLiInfoEntity entity, String fid,int act){
         String url="https://api.bilibili.com/x/relation/modify";
 
-        String bili_jct = entity.getCookieMap().get("bili_jct");
+        System.out.println();
+        JSONObject jsonObject = new JSONObject(entity.getCookieMap());
+        String bili_jct = jsonObject.getString("bili_jct");
 
         String data="fid="+fid+"&act="+act+"&re_src=11&jsonp=jsonp&csrf="+bili_jct;
 
