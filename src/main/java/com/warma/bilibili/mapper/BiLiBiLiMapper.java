@@ -9,7 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface BiLiBiLiMapper {
-    @Insert("insert into userinfo(uid,cookies,name) values(#{uid},#{cookies},#{name})")
+    @Insert("insert into userinfo(uid,cookies,name,cookiemap) values(#{uid},#{cookies},#{name},#{cookiemap})")
     int insertCookies(BiLiBiLiInfoEntity entity);
 
     @Select("select * from bilibili.userinfo")
