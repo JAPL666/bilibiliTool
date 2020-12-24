@@ -52,7 +52,7 @@ public class BiLiBiLi {
                                     System.out.println("动态ID："+biLiBiLiEntity.getDynamicId());
                                     boolean followed = biLiBiLiApi.is_followed(biLiBiLiInfoEntity, String.valueOf(info.getUid()));
                                     if(!followed){
-                                        biLiBiLiApi.modify(biLiBiLiInfoEntity,String.valueOf(info.getUid()),1);
+                                        biLiBiLiApi.modify(biLiBiLiInfoEntity,String.valueOf(biLiBiLiEntity.getHost_uid()),1);
                                     }
                                     BiLiBiLiEntity entity = new BiLiBiLiEntity();
                                     entity.setDynamicId(biLiBiLiEntity.getDynamicId());
