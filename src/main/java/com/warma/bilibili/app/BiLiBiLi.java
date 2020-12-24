@@ -34,7 +34,7 @@ public class BiLiBiLi {
             for (BiLiBiLiInfoEntity biLiBiLiInfoEntity : userInfo) {
 
                 //循环次数
-                for (int i = 0; i < 100; i++) {
+                for (int i = 0; i < 1000; i++) {
 
                     //随机生成UID
                     int randomUid = Warma.Random(2, 9000000);
@@ -53,6 +53,7 @@ public class BiLiBiLi {
 
                                 for (BiLiBiLiEntity biLiBiLiEntity : dynamicIdList) {
                                     System.out.println("动态ID："+biLiBiLiEntity.getDynamicId());
+                                    System.out.println("UID："+biLiBiLiEntity.getDynamicId());
 //                                    //获取关注状态
 //                                    boolean followed = biLiBiLiApi.is_followed(biLiBiLiInfoEntity, String.valueOf(info.getUid()));
 //                                    //如果没有关注
