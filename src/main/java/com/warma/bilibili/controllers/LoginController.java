@@ -41,6 +41,7 @@ public class LoginController {
             //访问图片URL，把图片转base64
             entity.setFace(Warma.getImageBase64(entity.getFace()));
             entity.setCode(0);
+            entity.setCookies(cookies);
 
             //插入数据库
             service.insertCookies(entity);

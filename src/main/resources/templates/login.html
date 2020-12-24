@@ -9,7 +9,7 @@
             getApi();
             function getApi() {
                 $.ajax({
-                    url: 'http://127.0.0.1:8080/checkLogin',
+                    url: 'http://127.0.0.1:2233/checkLogin',
                     type: 'get',
                     success: function (data) {
                         if (data.code === 0) {
