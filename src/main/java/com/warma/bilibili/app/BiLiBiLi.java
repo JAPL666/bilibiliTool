@@ -53,20 +53,20 @@ public class BiLiBiLi {
 
                                 for (BiLiBiLiEntity biLiBiLiEntity : dynamicIdList) {
                                     System.out.println("动态ID："+biLiBiLiEntity.getDynamicId());
-                                    //获取关注状态
-                                    boolean followed = biLiBiLiApi.is_followed(biLiBiLiInfoEntity, String.valueOf(info.getUid()));
-                                    //如果没有关注
-                                    if(!followed){
-                                        //关注
-                                        biLiBiLiApi.modify(biLiBiLiInfoEntity,String.valueOf(biLiBiLiEntity.getHost_uid()),1);
-                                    }
-                                    BiLiBiLiEntity entity = new BiLiBiLiEntity();
-                                    //要转发动态的ID
-                                    entity.setDynamicId(biLiBiLiEntity.getDynamicId());
-                                    //自己的UID
-                                    entity.setMyuid(String.valueOf(biLiBiLiInfoEntity.getUid()));
-                                    //转发抽奖动态
-                                    biLiBiLiApi.dynamic_repost(biLiBiLiInfoEntity,entity,"礼物我收下了！！！！");
+//                                    //获取关注状态
+//                                    boolean followed = biLiBiLiApi.is_followed(biLiBiLiInfoEntity, String.valueOf(info.getUid()));
+//                                    //如果没有关注
+//                                    if(!followed){
+//                                        //关注
+//                                        biLiBiLiApi.modify(biLiBiLiInfoEntity,String.valueOf(biLiBiLiEntity.getHost_uid()),1);
+//                                    }
+//                                    BiLiBiLiEntity entity = new BiLiBiLiEntity();
+//                                    //要转发动态的ID
+//                                    entity.setDynamicId(biLiBiLiEntity.getDynamicId());
+//                                    //自己的UID
+//                                    entity.setMyuid(String.valueOf(biLiBiLiInfoEntity.getUid()));
+//                                    //转发抽奖动态
+//                                    biLiBiLiApi.dynamic_repost(biLiBiLiInfoEntity,entity,"礼物我收下了！！！！");
 
                                     DynamicidAndUid dynamicidAndUid = new DynamicidAndUid();
                                     //抽奖动态ID
@@ -77,7 +77,6 @@ public class BiLiBiLi {
                                     biLiBiLi.service.insertDynamicidAndUid(dynamicidAndUid);
 
                                 }
-                                System.out.println("\n");
                             }
 
                         }
