@@ -1,6 +1,7 @@
 package com.warma.bilibili.service.impl;
 
 import com.warma.bilibili.entity.BiLiBiLiInfoEntity;
+import com.warma.bilibili.entity.DynamicidAndUid;
 import com.warma.bilibili.mapper.BiLiBiLiMapper;
 import com.warma.bilibili.service.BiLiBiLiService;
 import org.springframework.stereotype.Service;
@@ -20,5 +21,15 @@ public class BiLiBiLiServiceImpl implements BiLiBiLiService {
     @Override
     public List<BiLiBiLiInfoEntity> findUserInfo() {
         return mapper.findUserInfo();
+    }
+
+    @Override
+    public int insertDynamicidAndUid(DynamicidAndUid dynamicidAndUid) {
+        return mapper.insertDynamicidAndUid(dynamicidAndUid);
+    }
+
+    @Override
+    public List<BiLiBiLiInfoEntity> findDynamicidAndUid() {
+        return mapper.findDynamicidAndUid();
     }
 }

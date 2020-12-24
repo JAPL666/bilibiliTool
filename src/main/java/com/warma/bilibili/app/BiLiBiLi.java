@@ -2,6 +2,7 @@ package com.warma.bilibili.app;
 
 import com.warma.bilibili.entity.BiLiBiLiEntity;
 import com.warma.bilibili.entity.BiLiBiLiInfoEntity;
+import com.warma.bilibili.entity.DynamicidAndUid;
 import com.warma.bilibili.service.impl.BiLiBiLiServiceImpl;
 import com.warma.bilibili.utils.BiLiBiLiApi;
 import com.warma.bilibili.utils.Warma;
@@ -66,6 +67,14 @@ public class BiLiBiLi {
                                     entity.setMyuid(String.valueOf(biLiBiLiInfoEntity.getUid()));
                                     //转发抽奖动态
                                     biLiBiLiApi.dynamic_repost(biLiBiLiInfoEntity,entity,"我收下了、、、、、");
+
+                                    DynamicidAndUid dynamicidAndUid = new DynamicidAndUid();
+                                    //抽奖动态ID
+                                    dynamicidAndUid.setDynamicid(biLiBiLiEntity.getDynamicId());
+                                    //发动态的人的UID
+                                    dynamicidAndUid.setUid(biLiBiLiEntity.getHost_uid());
+                                    //动态ID和UID插入数据库
+                                    biLiBiLi.service.insertDynamicidAndUid(dynamicidAndUid);
 
                                 }
                                 System.out.println("\n");
