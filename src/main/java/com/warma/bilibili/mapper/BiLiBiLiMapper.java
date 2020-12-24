@@ -12,6 +12,6 @@ public interface BiLiBiLiMapper {
     @Insert("insert into userinfo(uid,cookies,name) values(#{uid},#{cookies},#{name})")
     int insertCookies(BiLiBiLiInfoEntity entity);
 
-    @Select("select * from userinfo")
+    @Select("select * from bilibili.userinfo")
     List<BiLiBiLiInfoEntity> findUserInfo();
 }
