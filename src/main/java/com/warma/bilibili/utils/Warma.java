@@ -116,14 +116,13 @@ public class Warma {
                     message.write(buffer,0,lenght);
                 }
                 resultEntity.setResult(new String(message.toByteArray(), StandardCharsets.UTF_8));
-                return resultEntity;
             }else{
                 System.out.println(code);
             }
         }catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return resultEntity;
     }
 
     public static ResultEntity get(String url,HashMap<String,String> requestProperty) {
@@ -176,14 +175,13 @@ public class Warma {
                     message.write(buffer,0,lenght);
                 }
                 resultEntity.setResult(new String(message.toByteArray(), StandardCharsets.UTF_8));
-                return resultEntity;
             }else{
                 System.out.println(code);
             }
         }catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return resultEntity;
     }
     public static String getMD5String(String str) {
         try {
@@ -204,7 +202,7 @@ public class Warma {
         return "";
     }
     //获取指定范围的随机数
-    public static int Random(int s,int d){
+    public static int Random(long s,long d){
         return (int)(Math.random()*(d-s)+s);
     }
     public static String getImageBase64(String imageUrl){

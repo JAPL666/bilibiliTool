@@ -325,7 +325,6 @@ public class BiLiBiLiApi {
         requestProperty.put("Cookie",entity.getCookies());
         ResultEntity result = Warma.get(url, requestProperty);
 
-        assert result != null;
         return new JSONObject(result.result).getJSONObject("data").getBoolean("is_followed");
     }
 
@@ -336,8 +335,17 @@ public class BiLiBiLiApi {
         String url="https://api.bilibili.com/x/space/acc/info?mid="+uid+"&jsonp=jsonp";
         ResultEntity result = Warma.get(url, new HashMap<>());
 
-        assert result != null;
-        if(!result.result.contains("-404")||!result.result.contains("-400")){
+        System.out.println(result.result);
+        assert result.result !=null;
+
+        //-412请求被拦截
+        if(result.result.contains("-412")){
+
+            biLiBiLiInfoEntity.setCode(-412);
+
+        }else if(result.result.contains("-404")||result.result.contains("-400")){
+            biLiBiLiInfoEntity.setCode(-404);
+        }else{
             JSONObject data = new JSONObject(result.result).getJSONObject("data");
 
             biLiBiLiInfoEntity.setName(data.getString("name"));//名字
@@ -345,7 +353,7 @@ public class BiLiBiLiApi {
             biLiBiLiInfoEntity.setLevel(data.getInt("level"));//等级
             biLiBiLiInfoEntity.setSex(data.getString("sex"));//性别
             biLiBiLiInfoEntity.setUid(uid);//uid
-
+            biLiBiLiInfoEntity.setCode(0);//正常状态码
         }
         return biLiBiLiInfoEntity;
     }
