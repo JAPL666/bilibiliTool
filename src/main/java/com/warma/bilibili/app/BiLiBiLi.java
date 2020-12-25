@@ -38,7 +38,7 @@ public class BiLiBiLi {
             for (BiLiBiLiInfoEntity biLiBiLiInfoEntity : userInfo) {
 
                 //循环次数
-                for (int i = 0; i < 5000; i++) {
+                for (int i = 0; i < 10000; i++) {
 
                     //随机生成UID
                     int randomUid = Warma.Random(2, 9000000);
