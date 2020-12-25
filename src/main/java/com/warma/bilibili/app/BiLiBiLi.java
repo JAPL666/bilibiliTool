@@ -132,7 +132,7 @@ public class BiLiBiLi {
             }
         }
     }
-    //取关没有抽奖动态的用户
+    //取关没有抽奖动态的用户 慎重使用 会取关自己关注的up
     public void modify(){
         BiLiBiLiApi biLiBiLiApi = new BiLiBiLiApi();
         List<BiLiBiLiInfoEntity> userInfo = biLiBiLi.service.findUserInfo();
