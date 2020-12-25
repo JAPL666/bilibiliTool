@@ -5,6 +5,7 @@ import com.warma.bilibili.entity.BiLiBiLiInfoEntity;
 import com.warma.bilibili.entity.DynamicidAndUid;
 import com.warma.bilibili.service.impl.BiLiBiLiServiceImpl;
 import com.warma.bilibili.utils.BiLiBiLiApi;
+import com.warma.bilibili.utils.Mail;
 import com.warma.bilibili.utils.Warma;
 import org.springframework.stereotype.Component;
 
@@ -96,6 +97,7 @@ public class BiLiBiLi {
             }
         }
     }
+    //删除过期动态并检测是否中奖
     public static void expiredDynamicDelete(){
         BiLiBiLiApi biLiBiLiApi = new BiLiBiLiApi();
         List<BiLiBiLiInfoEntity> userInfo = biLiBiLi.service.findUserInfo();
@@ -112,6 +114,7 @@ public class BiLiBiLi {
                 if(biLiBiLiApi.isWinning(dynamicId,myUid)){
                     //中奖了
                     System.out.println("中奖了:"+dynamicId);
+                    Mail.sendEmail("2453885428@qq.com","哔哩哔哩动态抽奖中奖了！！","动态ID："+dynamicId+"\nUID:"+biLiBiLiEntity.getHost_uid());
                 }else{
                     //删除过期动态
                     biLiBiLiApi.rm_dynamic(biLiBiLiInfoEntity,dynamicId);
