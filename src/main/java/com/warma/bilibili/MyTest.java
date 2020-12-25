@@ -18,7 +18,7 @@ public class MyTest {
 //            System.out.println(biLiBiLiEntity.getHost_uid());
 //        }
 
-        QRCode.createConsoleQRCode("http://warma.fun");
+        QRCode.createConsoleQRCode("http://warma.fun:520");
 
     }
 }

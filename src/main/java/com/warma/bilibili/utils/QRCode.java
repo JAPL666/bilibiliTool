@@ -48,7 +48,7 @@ public class QRCode {
             for (int i = 0; i < height; i++) {
                 for (int j = 0; j < width; j++) {
                     int rgb = bi.getRGB(j, i);
-                    if(x>28){
+                    if(x>=width){
                         System.out.print("\n");
                         x=0;
                     }
