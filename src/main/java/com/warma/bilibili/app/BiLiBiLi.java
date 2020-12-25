@@ -3,15 +3,19 @@ package com.warma.bilibili.app;
 import com.warma.bilibili.entity.BiLiBiLiEntity;
 import com.warma.bilibili.entity.BiLiBiLiInfoEntity;
 import com.warma.bilibili.entity.DynamicidAndUid;
+import com.warma.bilibili.entity.ResultEntity;
 import com.warma.bilibili.service.impl.BiLiBiLiServiceImpl;
 import com.warma.bilibili.utils.BiLiBiLiApi;
 import com.warma.bilibili.utils.Mail;
 import com.warma.bilibili.utils.Warma;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Component
@@ -98,7 +102,7 @@ public class BiLiBiLi {
         }
     }
     //删除过期动态并检测是否中奖
-    public static void expiredDynamicDelete(){
+    public void expiredDynamicDelete(){
         BiLiBiLiApi biLiBiLiApi = new BiLiBiLiApi();
         List<BiLiBiLiInfoEntity> userInfo = biLiBiLi.service.findUserInfo();
         for (BiLiBiLiInfoEntity biLiBiLiInfoEntity : userInfo) {
@@ -124,6 +128,35 @@ public class BiLiBiLi {
                     Thread.sleep(2000);
                 } catch (Exception e) {
                     e.printStackTrace();
+                }
+            }
+        }
+    }
+    //取关没有抽奖的太的用户
+    public void modify(){
+        BiLiBiLiApi biLiBiLiApi = new BiLiBiLiApi();
+        List<BiLiBiLiInfoEntity> userInfo = biLiBiLi.service.findUserInfo();
+        for (BiLiBiLiInfoEntity biLiBiLiInfoEntity : userInfo) {
+            String cookies = biLiBiLiInfoEntity.getCookies();
+            String url="https://api.vc.bilibili.com/feed/v1/feed/get_attention_list?uid="+biLiBiLiInfoEntity.getUid();
+            HashMap<String, String> map = new HashMap<>();
+            map.put("Cookie",cookies);
+            ResultEntity resultEntity = Warma.get(url, map);
+
+            String result = resultEntity.result;
+            if(!result.contains("success")){
+                continue;
+            }
+            JSONObject json = new JSONObject(result);
+
+            JSONArray jsonArray = json.getJSONObject("data").getJSONArray("list");
+            for (Object uid : jsonArray) {
+                //获取用户转发的可用抽奖数量
+                ArrayList<BiLiBiLiEntity> dynamicIdList = biLiBiLiApi.getDynamicIdList(uid.toString());
+                //如果转发的可用动态小于零则取关
+                if(0<dynamicIdList.size()){
+                    //取关
+                    biLiBiLiApi.modify(biLiBiLiInfoEntity,String.valueOf(uid.toString()),2);
                 }
             }
         }
