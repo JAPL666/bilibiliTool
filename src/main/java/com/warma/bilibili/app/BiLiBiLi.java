@@ -53,8 +53,7 @@ public class BiLiBiLi {
                             if(dynamicIdList.size()!=0){
 
                                 for (BiLiBiLiEntity biLiBiLiEntity : dynamicIdList) {
-                                    System.out.print("动态ID："+biLiBiLiEntity.getDynamicId());
-                                    System.out.println("  UID："+biLiBiLiEntity.getHost_uid());
+
 //                                    //获取关注状态
 //                                    boolean followed = biLiBiLiApi.is_followed(biLiBiLiInfoEntity, String.valueOf(info.getUid()));
 //                                    //如果没有关注
@@ -76,7 +75,11 @@ public class BiLiBiLi {
                                     //发动态的人的UID
                                     dynamicidAndUid.setUid(biLiBiLiEntity.getHost_uid());
                                     //动态ID和UID插入数据库
-                                    biLiBiLi.service.insertDynamicidAndUid(dynamicidAndUid);
+                                    int result = biLiBiLi.service.insertDynamicidAndUid(dynamicidAndUid);
+                                    if(result>0){
+                                        System.out.print("动态ID："+biLiBiLiEntity.getDynamicId());
+                                        System.out.println("  UID："+biLiBiLiEntity.getHost_uid());
+                                    }
 
                                 }
                             }
@@ -85,7 +88,7 @@ public class BiLiBiLi {
                     }
 
                     try {
-                        Thread.sleep(200);
+                        Thread.sleep(2000);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
