@@ -132,7 +132,7 @@ public class BiLiBiLi {
             }
         }
     }
-    //取关没有抽奖的太的用户
+    //取关没有抽奖动态的用户
     public void modify(){
         BiLiBiLiApi biLiBiLiApi = new BiLiBiLiApi();
         List<BiLiBiLiInfoEntity> userInfo = biLiBiLi.service.findUserInfo();
