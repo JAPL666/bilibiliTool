@@ -5,7 +5,7 @@ import com.warma.bilibili.utils.QRCode;
 
 public class MyTest {
     public static void main(String[] args) {
-        BiLiBiLiApi biLiBiLiApi = new BiLiBiLiApi();
+//        BiLiBiLiApi biLiBiLiApi = new BiLiBiLiApi();
 
 
         //BILIBILI扫码登录
@@ -18,7 +18,7 @@ public class MyTest {
 //            System.out.println(biLiBiLiEntity.getHost_uid());
 //        }
 
-        QRCode.createConsoleQRCode("http://warma.fun:520");
+//        QRCode.createConsoleQRCode("http://warma.fun:520");
 
     }
 }

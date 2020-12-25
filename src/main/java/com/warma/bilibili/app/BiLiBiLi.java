@@ -37,7 +37,9 @@ public class BiLiBiLi {
             //遍历多个用户
             for (BiLiBiLiInfoEntity biLiBiLiInfoEntity : userInfo) {
 
-                while (true){
+                //循环次数
+                for (int i = 0; i < 5000; i++) {
+
                     //随机生成UID
                     int randomUid = Warma.Random(2, 9000000);
                     //通过UID获取用户信息
