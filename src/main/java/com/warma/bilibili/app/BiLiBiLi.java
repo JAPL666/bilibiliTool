@@ -37,9 +37,7 @@ public class BiLiBiLi {
             //遍历多个用户
             for (BiLiBiLiInfoEntity biLiBiLiInfoEntity : userInfo) {
 
-                //循环次数
-                for (int i = 0; i < 999999999; i++) {
-
+                while (true){
                     //随机生成UID
                     int randomUid = Warma.Random(2, 9000000);
                     //通过UID获取用户信息
@@ -47,6 +45,7 @@ public class BiLiBiLi {
                     if(info.getCode()==-412){
                         //请求繁忙，请求被拦截
                         System.out.println("请求被拦截>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                        break;
                     }else if(info.getCode() == 0){
 
                         //等级大于0才执行
@@ -58,29 +57,6 @@ public class BiLiBiLi {
 
                                 for (BiLiBiLiEntity biLiBiLiEntity : dynamicIdList) {
 
-//                                    //获取关注状态
-//                                    boolean followed = biLiBiLiApi.is_followed(biLiBiLiInfoEntity, String.valueOf(info.getUid()));
-//                                    //如果没有关注
-//                                    if(!followed){
-//                                        //关注
-//                                        biLiBiLiApi.modify(biLiBiLiInfoEntity,String.valueOf(biLiBiLiEntity.getHost_uid()),1);
-//                                    }
-//                                    BiLiBiLiEntity entity = new BiLiBiLiEntity();
-//                                    //要转发动态的ID
-//                                    entity.setDynamicId(biLiBiLiEntity.getDynamicId());
-//                                    //自己的UID
-//                                    entity.setMyuid(String.valueOf(biLiBiLiInfoEntity.getUid()));
-//                                    //转发抽奖动态
-//                                    biLiBiLiApi.dynamic_repost(biLiBiLiInfoEntity,entity,"礼物我收下了！！！！");
-
-                                    String comment;
-                                    if(allComment.size()>0){
-                                        int random = Warma.Random(0, allComment.size());
-                                        comment = allComment.get(random);
-                                    }else{
-                                        comment="礼物我收下了！！！！";
-                                    }
-
                                     DynamicidAndUid dynamicidAndUid = new DynamicidAndUid();
                                     //抽奖动态ID
                                     dynamicidAndUid.setDynamicId(biLiBiLiEntity.getDynamicId());
@@ -91,6 +67,32 @@ public class BiLiBiLi {
                                     if(result>0){
                                         System.out.print("动态ID："+biLiBiLiEntity.getDynamicId());
                                         System.out.println("  UID："+biLiBiLiEntity.getHost_uid());
+
+
+                                        String comment;
+                                        if(allComment.size()>0){
+                                            int random = Warma.Random(0, allComment.size());
+                                            //从数据库中随机获取评论
+                                            comment = allComment.get(random);
+                                        }else{
+                                            comment="礼物我收下了！！！！";
+                                        }
+
+                                        //获取关注状态
+                                        boolean followed = biLiBiLiApi.is_followed(biLiBiLiInfoEntity, String.valueOf(info.getUid()));
+                                        //如果没有关注
+                                        if(!followed){
+                                            //关注
+                                            biLiBiLiApi.modify(biLiBiLiInfoEntity,String.valueOf(biLiBiLiEntity.getHost_uid()),1);
+                                        }
+                                        BiLiBiLiEntity entity = new BiLiBiLiEntity();
+                                        //要转发动态的ID
+                                        entity.setDynamicId(biLiBiLiEntity.getDynamicId());
+                                        //自己的UID
+                                        entity.setMyuid(String.valueOf(biLiBiLiInfoEntity.getUid()));
+                                        //转发抽奖动态
+                                        biLiBiLiApi.dynamic_repost(biLiBiLiInfoEntity,entity,comment);
+
                                     }
 
                                 }
@@ -100,7 +102,7 @@ public class BiLiBiLi {
                     }
 
                     try {
-                        Thread.sleep(2000);
+                        Thread.sleep(5000);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
