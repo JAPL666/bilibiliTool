@@ -285,7 +285,6 @@ public class BiLiBiLiApi {
         String url="https://api.vc.bilibili.com/lottery_svr/v1/lottery_svr/lottery_notice?dynamic_id="+dynamicId;
         ResultEntity res = Warma.get(url, new HashMap<>());
 
-        assert res != null;
         String result = res.result;
 
         //检查是否中奖
@@ -318,6 +317,11 @@ public class BiLiBiLiApi {
         HashMap<String,String> requestProperty=new HashMap<>();
         requestProperty.put("Cookie",entity.getCookies());
         ResultEntity result = Warma.get(url, requestProperty);
+
+        //-412请求被拦截
+        if(result.result.contains("-412")){
+            System.out.println("请求被拦截！");
+        }
 
         return new JSONObject(result.result).getJSONObject("data").getBoolean("is_followed");
     }
