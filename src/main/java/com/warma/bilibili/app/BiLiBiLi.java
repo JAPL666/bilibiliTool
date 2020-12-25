@@ -1,9 +1,6 @@
 package com.warma.bilibili.app;
 
-import com.warma.bilibili.entity.BiLiBiLiEntity;
-import com.warma.bilibili.entity.BiLiBiLiInfoEntity;
-import com.warma.bilibili.entity.DynamicidAndUid;
-import com.warma.bilibili.entity.ResultEntity;
+import com.warma.bilibili.entity.*;
 import com.warma.bilibili.service.impl.BiLiBiLiServiceImpl;
 import com.warma.bilibili.utils.BiLiBiLiApi;
 import com.warma.bilibili.utils.Mail;
@@ -31,6 +28,8 @@ public class BiLiBiLi {
         biLiBiLi =this;
     }
     public void getDynamic(){
+        List<String> allComment = biLiBiLi.service.findAllComment();
+
         BiLiBiLiApi biLiBiLiApi = new BiLiBiLiApi();
         List<BiLiBiLiInfoEntity> userInfo = biLiBiLi.service.findUserInfo();
 
@@ -73,6 +72,14 @@ public class BiLiBiLi {
 //                                    entity.setMyuid(String.valueOf(biLiBiLiInfoEntity.getUid()));
 //                                    //转发抽奖动态
 //                                    biLiBiLiApi.dynamic_repost(biLiBiLiInfoEntity,entity,"礼物我收下了！！！！");
+
+                                    String comment;
+                                    if(allComment.size()>0){
+                                        int random = Warma.Random(0, allComment.size());
+                                        comment = allComment.get(random);
+                                    }else{
+                                        comment="礼物我收下了！！！！";
+                                    }
 
                                     DynamicidAndUid dynamicidAndUid = new DynamicidAndUid();
                                     //抽奖动态ID

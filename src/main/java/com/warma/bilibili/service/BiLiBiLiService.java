@@ -1,7 +1,6 @@
 package com.warma.bilibili.service;
 
 import com.warma.bilibili.entity.BiLiBiLiInfoEntity;
-import com.warma.bilibili.entity.CommentEntity;
 import com.warma.bilibili.entity.DynamicidAndUid;
 
 import java.util.List;
@@ -15,5 +14,5 @@ public interface BiLiBiLiService {
 
     List<DynamicidAndUid> findDynamicidAndUid();
 
-    List<CommentEntity> findAllComment();
+    List<String> findAllComment();
 }

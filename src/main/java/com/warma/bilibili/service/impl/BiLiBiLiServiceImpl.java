@@ -1,7 +1,6 @@
 package com.warma.bilibili.service.impl;
 
 import com.warma.bilibili.entity.BiLiBiLiInfoEntity;
-import com.warma.bilibili.entity.CommentEntity;
 import com.warma.bilibili.entity.DynamicidAndUid;
 import com.warma.bilibili.mapper.BiLiBiLiMapper;
 import com.warma.bilibili.service.BiLiBiLiService;
@@ -35,7 +34,7 @@ public class BiLiBiLiServiceImpl implements BiLiBiLiService {
     }
 
     @Override
-    public List<CommentEntity> findAllComment() {
+    public List<String> findAllComment() {
         return mapper.findAllComment();
     }
 }
