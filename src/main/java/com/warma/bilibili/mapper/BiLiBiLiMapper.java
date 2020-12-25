@@ -1,6 +1,7 @@
 package com.warma.bilibili.mapper;
 
 import com.warma.bilibili.entity.BiLiBiLiInfoEntity;
+import com.warma.bilibili.entity.CommentEntity;
 import com.warma.bilibili.entity.DynamicidAndUid;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -26,6 +27,10 @@ public interface BiLiBiLiMapper {
     //查询动态ID和UID
     @Select("select * from dynamicid_and_uid")
     List<DynamicidAndUid> findDynamicidAndUid();
+
+    //查询所有评论
+    @Select("select * from comment")
+    List<CommentEntity> findAllComment();
 
 
 }
