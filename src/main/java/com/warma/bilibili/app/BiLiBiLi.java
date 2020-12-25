@@ -97,6 +97,32 @@ public class BiLiBiLi {
         }
     }
     public static void expiredDynamicDelete(){
+        BiLiBiLiApi biLiBiLiApi = new BiLiBiLiApi();
+        List<BiLiBiLiInfoEntity> userInfo = biLiBiLi.service.findUserInfo();
+        for (BiLiBiLiInfoEntity biLiBiLiInfoEntity : userInfo) {
+            //我的uid
+            String myUid=String.valueOf(biLiBiLiInfoEntity.getUid());
 
+            //获取自己转发的过期抽奖动态
+            ArrayList<BiLiBiLiEntity> list = biLiBiLiApi.getExpiredDynamicIdList(myUid);
+            for (BiLiBiLiEntity biLiBiLiEntity : list) {
+                //动态id
+                String dynamicId = biLiBiLiEntity.getDynamicId();
+
+                if(biLiBiLiApi.isWinning(dynamicId,myUid)){
+                    //中奖了
+                    System.out.println("中奖了:"+dynamicId);
+                }else{
+                    //删除过期动态
+                    biLiBiLiApi.rm_dynamic(biLiBiLiInfoEntity,dynamicId);
+                }
+
+                try {
+                    Thread.sleep(2000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }
