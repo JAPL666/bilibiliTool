@@ -332,8 +332,7 @@ public class BiLiBiLiApi {
 
         String url="https://api.bilibili.com/x/space/acc/info?mid="+uid+"&jsonp=jsonp";
         ResultEntity result = Warma.get(url, new HashMap<>());
-
-        assert result.result !=null;
+        biLiBiLiInfoEntity.setCode(-404);//设置默认值
 
         //-412请求被拦截
         if(result.result.contains("-412")){
