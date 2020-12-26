@@ -335,11 +335,11 @@ public class BiLiBiLiApi {
         biLiBiLiInfoEntity.setCode(-404);//设置默认值
 
         //-412请求被拦截
-        if(result.result.contains("-412")){
+        if(result.result.contains("412")){
 
             biLiBiLiInfoEntity.setCode(-412);
 
-        }else if(result.result.contains("-404")||result.result.contains("-400")){
+        }else if(result.result.contains("404")||result.result.contains("400")){
             biLiBiLiInfoEntity.setCode(-404);
         }else{
             JSONObject data = new JSONObject(result.result).getJSONObject("data");
