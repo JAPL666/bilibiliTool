@@ -1,6 +1,7 @@
 package com.warma.bilibili;
 
 import com.warma.bilibili.app.BiLiBiLi;
+import com.warma.bilibili.utils.BiLiBiLiApi;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,6 +15,7 @@ public class BilibiliToolApplication {
     public static void main(String[] args) {
         SpringApplication.run(BilibiliToolApplication.class, args);
 
-        BiLiBiLi.getAllId();
+        new BiLiBiLi().getDynamic();
+        //System.out.println(new BiLiBiLiApi().getInfo(2).toString());
     }
 }

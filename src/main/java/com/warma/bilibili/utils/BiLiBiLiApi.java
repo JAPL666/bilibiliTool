@@ -76,6 +76,12 @@ public class BiLiBiLiApi {
             ResultEntity result = Warma.get(url, new HashMap<>());
 
             String res = result.result;
+            if(res.equals("")){
+                continue;
+            }
+
+            System.out.println(res);
+
             JSONObject json = new JSONObject(res);
 
             int has_more = json.getJSONObject("data").getInt("has_more");
@@ -342,6 +348,7 @@ public class BiLiBiLiApi {
         }else if(result.result.contains("-404")||result.result.contains("-400")){
             biLiBiLiInfoEntity.setCode(-404);
         }else{
+            biLiBiLiInfoEntity.setCode(0);//正常状态码
             JSONObject data = new JSONObject(result.result).getJSONObject("data");
 
             biLiBiLiInfoEntity.setName(data.getString("name"));//名字
@@ -349,7 +356,6 @@ public class BiLiBiLiApi {
             biLiBiLiInfoEntity.setLevel(data.getInt("level"));//等级
             biLiBiLiInfoEntity.setSex(data.getString("sex"));//性别
             biLiBiLiInfoEntity.setUid(uid);//uid
-            biLiBiLiInfoEntity.setCode(0);//正常状态码
         }
         return biLiBiLiInfoEntity;
     }

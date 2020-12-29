@@ -27,9 +27,7 @@ public class BiLiBiLi {
     public void init(){
         biLiBiLi =this;
     }
-    public static void getDynamic(){
-        List<String> allComment = biLiBiLi.service.findAllComment();
-
+    public void getDynamic(){
         BiLiBiLiApi biLiBiLiApi = new BiLiBiLiApi();
         List<BiLiBiLiInfoEntity> userInfo = biLiBiLi.service.findUserInfo();
 
@@ -37,13 +35,17 @@ public class BiLiBiLi {
             //遍历多个用户
             for (BiLiBiLiInfoEntity biLiBiLiInfoEntity : userInfo) {
 
+                System.out.println(biLiBiLiInfoEntity.getName());
                 //循环次数
                 for (int i = 0; i < 1000; i++) {
 
                     //随机生成UID
-                    int randomUid = Warma.Random(2, 9000000);
+                    int randomUid = Warma.Random(2, 90000000);
                     //通过UID获取用户信息
                     BiLiBiLiInfoEntity info = biLiBiLiApi.getInfo(randomUid);
+
+                    System.out.println(info.toString());
+
                     if(info.getCode()==-412){
                         //请求繁忙，请求被拦截
                         System.out.println("请求被拦截>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
@@ -64,39 +66,17 @@ public class BiLiBiLi {
                                     dynamicidAndUid.setDynamicId(biLiBiLiEntity.getDynamicId());
                                     //发动态的人的UID
                                     dynamicidAndUid.setUid(biLiBiLiEntity.getHost_uid());
+
                                     //动态ID和UID插入数据库
                                     int result = biLiBiLi.service.insertDynamicidAndUid(dynamicidAndUid);
                                     if(result>0){
                                         System.out.print("动态ID："+biLiBiLiEntity.getDynamicId());
                                         System.out.println("  UID："+biLiBiLiEntity.getHost_uid());
 
-
-                                        String comment;
-                                        if(allComment.size()>0){
-                                            int random = Warma.Random(0, allComment.size());
-                                            //从数据库中随机获取评论
-                                            comment = allComment.get(random);
-                                        }else{
-                                            comment="礼物我收下了！！！！";
-                                        }
-
-                                        //获取关注状态
-                                        boolean followed = biLiBiLiApi.is_followed(biLiBiLiInfoEntity, String.valueOf(info.getUid()));
-                                        //如果没有关注
-                                        if(!followed){
-                                            //关注
-                                            biLiBiLiApi.modify(biLiBiLiInfoEntity,String.valueOf(biLiBiLiEntity.getHost_uid()),1);
-                                        }
-                                        BiLiBiLiEntity entity = new BiLiBiLiEntity();
-                                        //要转发动态的ID
-                                        entity.setDynamicId(biLiBiLiEntity.getDynamicId());
-                                        //自己的UID
-                                        entity.setMyuid(String.valueOf(biLiBiLiInfoEntity.getUid()));
-                                        //转发抽奖动态
-                                        biLiBiLiApi.dynamic_repost(biLiBiLiInfoEntity,entity,comment);
+                                        //转发动态
+                                        repost(biLiBiLiInfoEntity,biLiBiLiEntity,String.valueOf(info.getUid()));
 
                                     }
-
                                 }
                             }
 
@@ -104,7 +84,7 @@ public class BiLiBiLi {
                     }
 
                     try {
-                        Thread.sleep(2000);
+                        Thread.sleep(1000);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -113,7 +93,7 @@ public class BiLiBiLi {
         }
     }
     //删除过期动态并检测是否中奖
-    public static void expiredDynamicDelete(){
+    public void expiredDynamicDelete(){
         BiLiBiLiApi biLiBiLiApi = new BiLiBiLiApi();
         List<BiLiBiLiInfoEntity> userInfo = biLiBiLi.service.findUserInfo();
         for (BiLiBiLiInfoEntity biLiBiLiInfoEntity : userInfo) {
@@ -145,7 +125,7 @@ public class BiLiBiLi {
         }
     }
     //取关没有抽奖动态的用户 慎重使用 会取关自己关注的up
-    public static void modify(){
+    public void modify(){
         BiLiBiLiApi biLiBiLiApi = new BiLiBiLiApi();
         List<BiLiBiLiInfoEntity> userInfo = biLiBiLi.service.findUserInfo();
         for (BiLiBiLiInfoEntity biLiBiLiInfoEntity : userInfo) {
@@ -174,7 +154,7 @@ public class BiLiBiLi {
         }
     }
     //删除数据库中过期的动态id
-    public static void getAllId(){
+    public void getAllId(){
         List<DynamicidAndUid> dynamicidAndUid = biLiBiLi.service.findDynamicidAndUid();
         for (DynamicidAndUid entity : dynamicidAndUid) {
             boolean lottery = new BiLiBiLiApi().isLottery(entity.getDynamicId());
@@ -186,5 +166,39 @@ public class BiLiBiLi {
                 System.out.println(entity.getDynamicId()+"  uid:"+entity.getUid());
             }
         }
+    }
+
+    /**
+     *
+     * @param biLiBiLiInfoEntity 用户信息
+     * @param biLiBiLiEntity 动态id信息
+     * @param uid 要关注的uid
+     */
+    public static void repost(BiLiBiLiInfoEntity biLiBiLiInfoEntity,BiLiBiLiEntity biLiBiLiEntity,String uid){
+        BiLiBiLiApi biLiBiLiApi = new BiLiBiLiApi();
+        List<String> allComment = biLiBiLi.service.findAllComment();
+        String comment;
+        if(allComment.size()>0){
+            int random = Warma.Random(0, allComment.size());
+            //从数据库中随机获取评论
+            comment = allComment.get(random);
+        }else{
+            comment="礼物我收下了！！！！";
+        }
+
+        //获取关注状态
+        boolean followed = biLiBiLiApi.is_followed(biLiBiLiInfoEntity, uid);
+        //如果没有关注
+        if(!followed){
+            //关注
+            biLiBiLiApi.modify(biLiBiLiInfoEntity,String.valueOf(biLiBiLiEntity.getHost_uid()),1);
+        }
+        BiLiBiLiEntity entity = new BiLiBiLiEntity();
+        //要转发动态的ID
+        entity.setDynamicId(biLiBiLiEntity.getDynamicId());
+        //自己的UID
+        entity.setMyuid(String.valueOf(biLiBiLiInfoEntity.getUid()));
+        //转发抽奖动态
+        biLiBiLiApi.dynamic_repost(biLiBiLiInfoEntity,entity,comment);
     }
 }

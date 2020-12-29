@@ -70,11 +70,20 @@ public class Warma {
     }
     public static ResultEntity post(String url, String string, HashMap<String,String> requestProperty) {
         ResultEntity resultEntity=new ResultEntity();
+        resultEntity.setResult("");
         try {
             URL url2=new URL(url);
             HttpURLConnection connection=(HttpURLConnection)url2.openConnection();
             connection.setRequestMethod("POST");
             connection.addRequestProperty("Connection", "keep-alive");
+            connection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101 Firefox/84.0");
+            connection.addRequestProperty("Accept", "*/*");
+            connection.addRequestProperty("Accept-Language", "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2");
+            connection.addRequestProperty("Accept-Encoding", "gzip, deflate, br");
+            connection.addRequestProperty("TE", "Trailers");
+
+            connection.setConnectTimeout(4000);
+            connection.setReadTimeout(4000);
 
             Set<String> keySet = requestProperty.keySet();
             for (String key:keySet){
@@ -126,18 +135,29 @@ public class Warma {
                 System.out.println(code);
             }
         }catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            return post(url, string,  requestProperty);
         }
         return resultEntity;
     }
 
     public static ResultEntity get(String url,HashMap<String,String> requestProperty) {
         ResultEntity resultEntity=new ResultEntity();
+        resultEntity.setResult("");
         try {
             URL url2=new URL(url);
             HttpURLConnection connection=(HttpURLConnection)url2.openConnection();
             connection.setRequestMethod("GET");
             connection.addRequestProperty("Connection", "keep-alive");
+            connection.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101 Firefox/84.0");
+            connection.addRequestProperty("Accept", "*/*");
+            connection.addRequestProperty("Accept-Language", "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2");
+            connection.addRequestProperty("Accept-Encoding", "gzip, deflate, br");
+            connection.addRequestProperty("TE", "Trailers");
+
+
+            connection.setConnectTimeout(4000);
+            connection.setReadTimeout(4000);
 
             Set<String> keySet = requestProperty.keySet();
             for (String key:keySet){
@@ -185,7 +205,8 @@ public class Warma {
                 System.out.println(code);
             }
         }catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            return get(url, requestProperty);
         }
         return resultEntity;
     }
