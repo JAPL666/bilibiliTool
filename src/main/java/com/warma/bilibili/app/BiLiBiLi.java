@@ -27,7 +27,7 @@ public class BiLiBiLi {
     public void init(){
         biLiBiLi =this;
     }
-    public void getDynamic(){
+    public static void getDynamic(){
         List<String> allComment = biLiBiLi.service.findAllComment();
 
         BiLiBiLiApi biLiBiLiApi = new BiLiBiLiApi();
@@ -113,7 +113,7 @@ public class BiLiBiLi {
         }
     }
     //删除过期动态并检测是否中奖
-    public void expiredDynamicDelete(){
+    public static void expiredDynamicDelete(){
         BiLiBiLiApi biLiBiLiApi = new BiLiBiLiApi();
         List<BiLiBiLiInfoEntity> userInfo = biLiBiLi.service.findUserInfo();
         for (BiLiBiLiInfoEntity biLiBiLiInfoEntity : userInfo) {
@@ -145,7 +145,7 @@ public class BiLiBiLi {
         }
     }
     //取关没有抽奖动态的用户 慎重使用 会取关自己关注的up
-    public void modify(){
+    public static void modify(){
         BiLiBiLiApi biLiBiLiApi = new BiLiBiLiApi();
         List<BiLiBiLiInfoEntity> userInfo = biLiBiLi.service.findUserInfo();
         for (BiLiBiLiInfoEntity biLiBiLiInfoEntity : userInfo) {
