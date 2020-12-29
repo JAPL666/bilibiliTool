@@ -74,4 +74,18 @@ public class BiLiBiLiInfoEntity {
     public void setSex(String sex) {
         this.sex = sex;
     }
+
+    @Override
+    public String toString() {
+        return "BiLiBiLiInfoEntity{" +
+                "uid=" + uid +
+                ", name='" + name + '\'' +
+                ", face='" + face + '\'' +
+                ", level=" + level +
+                ", sex='" + sex + '\'' +
+                ", code=" + code +
+                ", cookies='" + cookies + '\'' +
+                ", cookieMap='" + cookieMap + '\'' +
+                '}';
+    }
 }

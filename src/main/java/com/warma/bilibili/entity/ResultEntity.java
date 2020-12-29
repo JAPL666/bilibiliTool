@@ -31,4 +31,13 @@ public class ResultEntity implements Serializable {
     public void setCookieMap(HashMap<String, String> cookieMap) {
         this.cookieMap = cookieMap;
     }
+
+    @Override
+    public String toString() {
+        return "ResultEntity{" +
+                "result='" + result + '\'' +
+                ", cookies='" + cookies + '\'' +
+                ", cookieMap=" + cookieMap +
+                '}';
+    }
 }

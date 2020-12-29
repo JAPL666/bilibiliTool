@@ -19,4 +19,12 @@ public class DynamicidAndUid {
     public void setUid(String uid) {
         this.uid = uid;
     }
+
+    @Override
+    public String toString() {
+        return "DynamicidAndUid{" +
+                "dynamicId='" + dynamicId + '\'' +
+                ", uid='" + uid + '\'' +
+                '}';
+    }
 }

@@ -30,4 +30,13 @@ public class BiLiBiLiEntity implements Serializable {
     public void setMyuid(String myuid) {
         this.myuid = myuid;
     }
+
+    @Override
+    public String toString() {
+        return "BiLiBiLiEntity{" +
+                "dynamicId='" + dynamicId + '\'' +
+                ", host_uid='" + host_uid + '\'' +
+                ", myuid='" + myuid + '\'' +
+                '}';
+    }
 }
