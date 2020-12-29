@@ -133,6 +133,7 @@ public class BiLiBiLi {
                 }else{
                     //删除过期动态
                     biLiBiLiApi.rm_dynamic(biLiBiLiInfoEntity,dynamicId);
+                    System.out.println("已经删除："+dynamicId+"  UID:"+biLiBiLiEntity.getHost_uid());
                 }
 
                 try {

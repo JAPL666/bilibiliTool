@@ -20,7 +20,6 @@ public class IndexController {
         String loginUrl="https://passport.bilibili.com/qrcode/getLoginUrl";
         ResultEntity loginResult = Warma.get(loginUrl, new HashMap<>());
 
-        assert loginResult != null;
         JSONObject json = new JSONObject(loginResult.getResult());
         JSONObject data = json.getJSONObject("data");
         String url = data.getString("url");
