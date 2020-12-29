@@ -14,8 +14,9 @@ public class Scheduler {
     }
 
     //删除开奖动态
-    @Scheduled(cron = "0 0 0 * * ? *")
+    @Scheduled(cron = "0 30 0 * * ? ")
     public void expiredDynamicDelete(){
         new BiLiBiLi().expiredDynamicDelete();
     }
+
 }
