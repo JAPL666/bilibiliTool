@@ -37,4 +37,9 @@ public class BiLiBiLiServiceImpl implements BiLiBiLiService {
     public List<String> findAllComment() {
         return mapper.findAllComment();
     }
+
+    @Override
+    public int deleteDynamicId(String dynamicId) {
+        return mapper.deleteDynamicId(dynamicId);
+    }
 }

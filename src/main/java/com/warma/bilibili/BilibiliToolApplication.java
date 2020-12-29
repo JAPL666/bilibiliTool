@@ -14,6 +14,6 @@ public class BilibiliToolApplication {
     public static void main(String[] args) {
         SpringApplication.run(BilibiliToolApplication.class, args);
 
-        BiLiBiLi.getDynamic();
+        BiLiBiLi.getAllId();
     }
 }

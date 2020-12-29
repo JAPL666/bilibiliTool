@@ -15,4 +15,6 @@ public interface BiLiBiLiService {
     List<DynamicidAndUid> findDynamicidAndUid();
 
     List<String> findAllComment();
+
+    int deleteDynamicId(String dynamicId);
 }

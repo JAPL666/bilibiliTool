@@ -2,6 +2,7 @@ package com.warma.bilibili.mapper;
 
 import com.warma.bilibili.entity.BiLiBiLiInfoEntity;
 import com.warma.bilibili.entity.DynamicidAndUid;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -26,6 +27,10 @@ public interface BiLiBiLiMapper {
     //查询动态ID和UID
     @Select("select * from dynamicid_and_uid")
     List<DynamicidAndUid> findDynamicidAndUid();
+
+    //删除
+    @Delete("delete from dynamicid_and_uid where dynamicId=#{dynamicId}")
+    int deleteDynamicId(String dynamicId);
 
     //查询所有评论
     @Select("select * from comment")

@@ -173,4 +173,18 @@ public class BiLiBiLi {
             }
         }
     }
+    //删除数据库中过期的动态id
+    public static void getAllId(){
+        List<DynamicidAndUid> dynamicidAndUid = biLiBiLi.service.findDynamicidAndUid();
+        for (DynamicidAndUid entity : dynamicidAndUid) {
+            boolean lottery = new BiLiBiLiApi().isLottery(entity.getDynamicId());
+            if(!lottery){
+                //删除
+                biLiBiLi.service.deleteDynamicId(entity.getDynamicId());
+                System.out.println("已过期： "+entity.getDynamicId()+"  uid:"+entity.getUid());
+            }else{
+                System.out.println(entity.getDynamicId()+"  uid:"+entity.getUid());
+            }
+        }
+    }
 }
