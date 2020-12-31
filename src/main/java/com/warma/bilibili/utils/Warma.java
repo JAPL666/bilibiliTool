@@ -130,7 +130,7 @@ public class Warma {
             }
         }catch (IOException e) {
             //e.printStackTrace();
-            return post(url, string,  requestProperty);
+            //return post(url, string,  requestProperty);
         }
         return resultEntity;
     }
@@ -200,7 +200,7 @@ public class Warma {
             }
         }catch (IOException e) {
             //e.printStackTrace();
-            return get(url, requestProperty);
+            //return get(url, requestProperty);
         }
         return resultEntity;
     }

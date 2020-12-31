@@ -340,6 +340,11 @@ public class BiLiBiLiApi {
         ResultEntity result = Warma.get(url, new HashMap<>());
         biLiBiLiInfoEntity.setCode(-404);//设置默认值
 
+        //如果结果为空直接返回
+        if(result.result.equals("")){
+            return biLiBiLiInfoEntity;
+        }
+
         //-412请求被拦截
         if(result.result.contains("-412")){
 

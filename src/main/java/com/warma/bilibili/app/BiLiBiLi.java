@@ -182,8 +182,8 @@ public class BiLiBiLi {
             int random = Warma.Random(0, allComment.size());
             //从数据库中随机获取评论
             comment = allComment.get(random);
-        }else{
-            comment="礼物我收下了！！！！";
+        }else {
+            comment = "礼物我收下了！！！！";
         }
 
         //获取关注状态

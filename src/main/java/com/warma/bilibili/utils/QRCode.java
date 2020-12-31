@@ -42,6 +42,7 @@ public class QRCode {
             BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, 28, 28);
 
             BufferedImage bi = MatrixToImageWriter.toBufferedImage(bitMatrix);
+
             int width = bi.getWidth();
             int height = bi.getHeight();
             int x=0;

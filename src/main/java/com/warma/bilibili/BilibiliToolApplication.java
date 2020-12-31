@@ -16,5 +16,6 @@ public class BilibiliToolApplication {
 
         //new BiLiBiLi().getDynamic();
         //System.out.println(new BiLiBiLiApi().getInfo(2).toString());
+        //new BiLiBiLi().getDynamic();
     }
 }
